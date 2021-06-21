@@ -1,21 +1,44 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState } from "react";
+import { StyleSheet, Text, View, Image, Flatlist, Alert } from "react-native";
+// import { registerRootComponent } from "expo";
+import store from "./store/store";
+import { Provider } from "react-redux";
+
+import ShopScreen from "./screens/ShopScreen";
+
+import AppLoading from "expo-app-loading";
+import * as Font from "expo-font";
+
+import Navigation from './config/navigation'
+
+const fetchFonts = () => {
+  return Font.loadAsync({
+    "open-sans": require("./assets/fonts/OpenSans-Regular.ttf"),
+    "poppins": "https://fonts.googleapis.com/css2?family=Poppins&display=swap",
+  });
+};
 
 export default function App() {
+  const [fontLoaded, setFontLoaded] = useState(false);
+
+  if (!fontLoaded) {
+    return (
+      <AppLoading
+        startAsync={fetchFonts}
+        onFinish={() => {
+          setFontLoaded(true);
+        }}
+        onError={(err) => Alert.alert(err)}
+      />
+    );
+  }
+
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <Provider store={store}>
+      <Navigation />
+    </Provider>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+// registerRootComponent(App);
