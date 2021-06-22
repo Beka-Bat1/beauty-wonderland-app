@@ -4,8 +4,9 @@ import { View, Text, Button, StyleSheet } from "react-native";
 import CartItem from "./CartItem";
 import Colors from "../../constants/Colors";
 import Card from "../UI/Card";
+import SecondaryAppButton from '../UI/buttons/SecondaryAppButton';
 
-const OrderItem = () => {
+const OrderItem = (props) => {
   const [showDetails, setShowDetails] = useState(false);
 
   return (
@@ -20,7 +21,8 @@ const OrderItem = () => {
           setShowDetails((prevState) => !prevState);
         }}
       />
-      {/* {/* {showDetails && (
+
+      {showDetails && (
         <View style={styles.detailItems}>
           {props.items.map(cartItem => (
             <CartItem
@@ -29,9 +31,12 @@ const OrderItem = () => {
               amount={cartItem.sum}
               title={cartItem.productTitle}
             />
-          ))} 
-        </View> */}
-      {showDetails && (
+          ))}
+        </View>
+      )}
+
+
+        {/* {showDetails && (                 does not work
         <FlatList
           style={styles.detailItems}
           data={props.items}
@@ -45,8 +50,8 @@ const OrderItem = () => {
             />;
           }}
         />
-      )}
-      />
+      )} */}
+      
     </Card>
   );
 };

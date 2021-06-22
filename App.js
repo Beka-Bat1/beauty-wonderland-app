@@ -9,7 +9,7 @@ import ShopScreen from "./screens/ShopScreen";
 import AppLoading from "expo-app-loading";
 import * as Font from "expo-font";
 
-import Navigation from './config/navigation'
+import RootStack from './config/RootStack';
 
 const fetchFonts = () => {
   return Font.loadAsync({
@@ -36,7 +36,7 @@ export default function App() {
 
   return (
     <Provider store={store}>
-      <Navigation />
+      <RootStack />
     </Provider>
   );
 }

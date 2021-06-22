@@ -1,8 +1,9 @@
-import { ADD_ORDER } from '../actions/orders';
+import { ADD_ORDER, TOGGLE_LOADING } from '../actions/orders';
 import Order from '../../models/order';
 
 const initialState = {
-  orders: []
+  orders: [],
+  isLoading: false,
 };
 
 export default (state = initialState, action) => {
@@ -18,6 +19,12 @@ export default (state = initialState, action) => {
         ...state,
         orders: state.orders.concat(newOrder)
       };
+
+    case TOGGLE_LOADING:
+      return {
+        ...state,
+        isLoading: !isLoading
+      }
   }
 
   return state;

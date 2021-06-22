@@ -6,8 +6,7 @@ import HeaderButton from '../components/UI/HeaderButton';
 import OrderItem from '../components/shop/OrderItem';
 
 const OrdersScreen = props => {
-  const orders = useSelector(state => state.orders.orders);
-
+  const orders = useSelector(state => state.orders.orders); 
   return (
     <FlatList
       data={orders}
@@ -22,7 +21,5 @@ const OrdersScreen = props => {
     />
   );
 };
-
-
 
 export default OrdersScreen;

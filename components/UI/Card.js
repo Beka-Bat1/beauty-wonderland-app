@@ -1,8 +1,6 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
-
 import * as Colors from "../../constants/Colors";
-
 
 const Card = (props) => {
   return (

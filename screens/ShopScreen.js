@@ -1,14 +1,14 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-
 import {
   StyleSheet,
   Text,
   View,
   FlatList,
   SafeAreaView,
-  Alert,
+  Alert
 } from "react-native";
+
 import ProductItem from "../components/shop/ProductItem";
 import PrimaryAppButton from "../components/UI/buttons/PrimaryAppButton";
 import SecondaryAppButton from "../components/UI/buttons/SecondaryAppButton";
@@ -16,21 +16,22 @@ import { addToCart } from "../store/actions/cart";
 
 import NavigatorButton from "../settings";
 
+
 const ShopScreen = ({ navigation }) => {
   const products = useSelector((state) => state.products.availableProducts);
   const dispatch = useDispatch();
 
   const selectItemHandler = (item) => {
-    Alert.alert(`you've selected item: ${item}`);
-    navigation.push("ProductDetailScreen", { item: item });
+    navigation.push("ProductDetailScreen", { item: item, title: item.title });
   };
 
   const addToCartHandler = (item) => {
-    dispatch(cartActions.addToCart(item));
+    showAlert(`${item.title} has been added to your cart `)
+    dispatch(addToCart(item));
   };
 
-  console.log(navigation);
-
+  const showAlert = (text) => Alert.alert( "Success", text, null, {cancelable: true});
+  
   return (
     <SafeAreaView>
       <FlatList
@@ -42,7 +43,7 @@ const ShopScreen = ({ navigation }) => {
             title={itemData.item.title}
             price={itemData.item.price}
             onSelect={() => {
-              selectItemHandler(itemData.item);
+              selectItemHandler(itemData.item.id);
             }}
           >
             <PrimaryAppButton
@@ -51,6 +52,7 @@ const ShopScreen = ({ navigation }) => {
                 selectItemHandler(itemData.item.id);
               }}
             />
+
             <SecondaryAppButton
               title={"Add to Cart"}
               onPress={() => {

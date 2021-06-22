@@ -1,5 +1,5 @@
-import React from "react";
-import { View, Text, FlatList, Button, StyleSheet } from "react-native";
+import React, {useState, useEffect} from "react";
+import { View, Text, FlatList, Button, StyleSheet, ActivityIndicator, Alert } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 
 import Colors from "../constants/Colors";
@@ -7,9 +7,12 @@ import CartItem from "../components/shop/CartItem";
 import Card from "../components/UI/Card";
 import * as cartActions from "../store/actions/cart";
 import * as ordersActions from "../store/actions/orders";
+import PrimaryAppButton from "../components/UI/buttons/PrimaryAppButton";
 
 const CartScreen = (props) => {
   const cartTotalAmount = useSelector((state) => state.cart.totalAmount);
+  const [isLoading, setIsLoading] = useState(false)
+
 
   const cartItems = useSelector((state) => {
     const transformedCartItems = [];
@@ -29,7 +32,8 @@ const CartScreen = (props) => {
   const dispatch = useDispatch();
 
   const orderButtonhandler = (cartItems, cartTotalAmount) => {
-    dispatch(ordersActions.addOrder(cartItems, cartTotalAmount));
+    setIsLoading(true)
+    dispatch(ordersActions.addOrder(cartItems, cartTotalAmount, () => setIsLoading(false)));
   };
 
   const removeFromCartHandler = (productId) => {
@@ -38,6 +42,9 @@ const CartScreen = (props) => {
 
   return (
     <View style={styles.screen}>
+
+      {isLoading ? (         <ActivityIndicator size="large" color="#00ff00" /> ) : ( <> 
+
       <Card style={styles.summary}>
         <Text style={styles.summaryText}>
           Total:{" "}
@@ -54,7 +61,8 @@ const CartScreen = (props) => {
           }}
         />
       </Card>
-      <FlatList
+
+        <FlatList
         data={cartItems}
         keyExtractor={(item) => item.productId}
         renderItem={(itemData) => (
@@ -69,6 +77,7 @@ const CartScreen = (props) => {
           />
         )}
       />
+       </>)}
     </View>
   );
 };
