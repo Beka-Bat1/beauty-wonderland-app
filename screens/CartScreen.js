@@ -1,5 +1,13 @@
-import React, {useState, useEffect} from "react";
-import { View, Text, FlatList, Button, StyleSheet, ActivityIndicator, Alert } from "react-native";
+import React, { useState, useEffect } from "react";
+import {
+  View,
+  Text,
+  FlatList,
+  Button,
+  StyleSheet,
+  ActivityIndicator,
+  Alert,
+} from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 
 import Colors from "../constants/Colors";
@@ -10,10 +18,9 @@ import * as ordersActions from "../store/actions/orders";
 import PrimaryAppButton from "../components/UI/buttons/PrimaryAppButton";
 
 const CartScreen = (props) => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const cartTotalAmount = useSelector((state) => state.cart.totalAmount);
-  const [isLoading, setIsLoading] = useState(false)
-
-
   const cartItems = useSelector((state) => {
     const transformedCartItems = [];
     for (const key in state.cart.items) {
@@ -32,52 +39,65 @@ const CartScreen = (props) => {
   const dispatch = useDispatch();
 
   const orderButtonhandler = (cartItems, cartTotalAmount) => {
-    setIsLoading(true)
-    dispatch(ordersActions.addOrder(cartItems, cartTotalAmount, () => setIsLoading(false)));
+    setIsLoading(true);
+    dispatch(
+      ordersActions.addOrder(cartItems, cartTotalAmount, () =>
+        setIsLoading(false)
+      )
+    );
   };
 
   const removeFromCartHandler = (productId) => {
     dispatch(cartActions.removeFromCart(productId));
   };
 
+  const sendOrderhandler = async () => {
+    setIsLoading(true);
+    await dispatch(orderButtonhandler(cartItems, cartTotalAmount));
+    setIsLoading(false);
+  };
+
   return (
     <View style={styles.screen}>
+      {isLoading ? (
+        <ActivityIndicator size="large" color="#00ff00" />
+      ) : (
+        <>
+          <Card style={styles.summary}>
+            <Text style={styles.summaryText}>
+              Total:{" "}
+              <Text style={styles.amount}>
+                ${Math.round(cartTotalAmount.toFixed(2) * 100) / 100}
+              </Text>
+            </Text>
+            {isLoading ? (
+              <ActivityIndicator size="small" color="black" />
+            ) : (
+              <PrimaryAppButton
+                title={"Order Now"}
+                disabled={cartItems.length === 0}
+                onPress={sendOrderhandler}
+              />
+            )}
+          </Card>
 
-      {isLoading ? (         <ActivityIndicator size="large" color="#00ff00" /> ) : ( <> 
-
-      <Card style={styles.summary}>
-        <Text style={styles.summaryText}>
-          Total:{" "}
-          <Text style={styles.amount}>
-            ${Math.round(cartTotalAmount.toFixed(2) * 100) / 100}
-          </Text>
-        </Text>
-
-        <PrimaryAppButton
-          title={"Order Now"}
-          disabled={cartItems.length === 0}
-          onPress={() => {
-            orderButtonhandler(cartItems, cartTotalAmount);
-          }}
-        />
-      </Card>
-
-        <FlatList
-        data={cartItems}
-        keyExtractor={(item) => item.productId}
-        renderItem={(itemData) => (
-          <CartItem
-            quantity={itemData.item.quantity}
-            title={itemData.item.productTitle}
-            amount={itemData.item.sum}
-            deletable
-            onRemove={() => {
-              removeFromCartHandler(itemData.item.productId);
-            }}
+          <FlatList
+            data={cartItems}
+            keyExtractor={(item) => item.productId}
+            renderItem={(itemData) => (
+              <CartItem
+                quantity={itemData.item.quantity}
+                title={itemData.item.productTitle}
+                amount={itemData.item.sum}
+                deletable
+                onRemove={() => {
+                  removeFromCartHandler(itemData.item.productId);
+                }}
+              />
+            )}
           />
-        )}
-      />
-       </>)}
+        </>
+      )}
     </View>
   );
 };
@@ -98,7 +118,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   amount: {
-    color: Colors.white,
+    color: 'white',
   },
 });
 

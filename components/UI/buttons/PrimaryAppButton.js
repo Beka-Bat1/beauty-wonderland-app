@@ -16,16 +16,16 @@ export default PrimaryAppButton;
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: Colors.white,
+    backgroundColor: 'white',
     paddingVertical: 2,
     paddingHorizontal: 20,
-    borderColor: Colors.black,
+    borderColor: 'black',
     borderWidth: 2,
     borderStyle: "solid",
     margin: 4
   },
   buttonText: {
-    color: Colors.black,
+    color: 'black',
     fontSize: 15,
   },
 

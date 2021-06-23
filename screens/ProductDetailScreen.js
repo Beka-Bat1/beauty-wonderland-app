@@ -7,8 +7,7 @@ import { addToCart } from "../store/actions/cart";
 import PrimaryAppButton from "../components/UI/buttons/PrimaryAppButton";
 
 const ProductDetailScreen = (props) => {
-  const productId =
-    props.route.params.item; /* get product id from navigation params*/
+  const productId = props.route.params.item; 
 
   const selectedProduct = useSelector((state) => {
     return state.products.availableProducts.find(
@@ -23,8 +22,6 @@ const ProductDetailScreen = (props) => {
     showAlert(`${selectedProduct.title} has been added to your cart `)
     dispatch(addToCart(selectedProduct));
   };
-
-  
 
   return (
     <ScrollView>

@@ -1,40 +1,36 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 
-import { ActivityIndicator } from 'react-native'
+import { ActivityIndicator } from "react-native";
 
-import Modal from './Modal'
-import Loading from './Loading'
-import RootDrawerNavigation from './RootDrawerNavigation'
+import Modal from "./Modal";
+import Loading from "./Loading";
+import RootDrawerNavigation from "./RootDrawerNavigation";
+import AuthStackScreen from "./AuthStackScreen";
 
 const RootStack = createStackNavigator();
 const RootStackScreen = () => {
-    const [isLoading, setIsLoading] = useState(true);
-  const [user, setUser] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const [user, setUser] = useState(false);
 
-
-    useEffect(() => {
-        setTimeout(() => {
-            setIsLoading(!isLoading)
-            setUser({})
-        }, 500);
-    }, []);
-
-    return (
-        <RootStack.Navigator
-                    headerMode="none"
-                  screenOptions={{ animationEnabled: false }}
-    mode="modal" >
-        {isLoading ? (
+  return (
+    <RootStack.Navigator
+      headerMode="none"
+      screenOptions={{ animationEnabled: false }}
+      mode="modal"
+    >
+      {isLoading ? (
         <RootStack.Screen name="Loading" component={Loading} />
       ) : user ? (
-        <RootStack.Screen name="rootDrawer" component={RootDrawerNavigation} />
+        <RootStack.Screen name="Root" component={RootDrawerNavigation} />
       ) : (
-          /** if user is not authorized */
-        <RootStack.Screen name="RootDrawerNavigation" component={RootDrawerNavigation} />
+        <RootStack.Screen name="AuthStackScreen" component={AuthStackScreen} />
       )}
-        <RootStack.Screen
+
+      <RootStack.Screen name="Root" component={RootDrawerNavigation} />
+
+      <RootStack.Screen
         name="Modal"
         component={Modal}
         options={{ animationEnabled: true }}
@@ -44,7 +40,7 @@ const RootStackScreen = () => {
         component={Modal}
         options={{
           animationEnabled: true,
-          cardStyle: { backgroundColor: 'rgba(0, 0, 0, 0.15)' },
+          cardStyle: { backgroundColor: "rgba(0, 0, 0, 0.15)" },
           cardOverlayEnabled: true,
           cardStyleInterpolator: ({ current: { progress } }) => {
             return {
@@ -58,23 +54,19 @@ const RootStackScreen = () => {
                 opacity: progress.interpolate({
                   inputRange: [0, 1],
                   outputRange: [0, 0.5],
-                  extrapolate: 'clamp',
+                  extrapolate: "clamp",
                 }),
               },
             };
           },
         }}
       />
-         </RootStack.Navigator>
-    )
-}
-
+    </RootStack.Navigator>
+  );
+};
 
 export default () => (
   <NavigationContainer>
     <RootStackScreen />
   </NavigationContainer>
 );
-
-
-

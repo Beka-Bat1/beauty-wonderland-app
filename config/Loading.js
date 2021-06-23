@@ -1,4 +1,8 @@
-import React from 'react'
-import { ActivityIndicator } from 'react-native';
+import React from "react";
+import { ActivityIndicator, View } from "react-native";
 
-export default () => <ActivityIndicator size="large" />
+export default () => (
+  <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+    <ActivityIndicator size="large" color="#f4a261" />
+  </View>
+);
