@@ -1,7 +1,8 @@
-import Order from '../../models/order';
+import Order from "../../models/order";
 
-export const ADD_ORDER = 'ADD_ORDER';
-export const SET_ORDERS = 'SET_ORDERS';
+export const ADD_ORDER = "ADD_ORDER";
+export const SET_ORDERS = "SET_ORDERS";
+export const TOGGLE_LOADING = "TOGGLE_LOADING";
 
 export const fetchOrders = () => {
   return async (dispatch, getState) => {
@@ -10,11 +11,9 @@ export const fetchOrders = () => {
       const response = await fetch(
         `https://beauty-wonderland-e913c-default-rtdb.firebaseio.com/orders/${userId}.json`
       );
-
       if (!response.ok) {
-        throw new Error('Something went wrong!');
+        throw new Error("Something went wrong!");
       }
-
       const resData = await response.json();
       const loadedOrders = [];
 
@@ -43,20 +42,20 @@ export const addOrder = (cartItems, totalAmount) => {
     const response = await fetch(
       `https://beauty-wonderland-e913c-default-rtdb.firebaseio.com/orders/${userId}.json?auth=${token}`,
       {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           cartItems,
           totalAmount,
-          date: date.toISOString()
-        })
+          date: date.toISOString(),
+        }),
       }
     );
 
     if (!response.ok) {
-      throw new Error('Something went wrong!');
+      throw new Error("Something went wrong!");
     }
 
     const resData = await response.json();
@@ -67,8 +66,8 @@ export const addOrder = (cartItems, totalAmount) => {
         id: resData.name,
         items: cartItems,
         amount: totalAmount,
-        date: date
-      }
+        date: date,
+      },
     });
   };
 };

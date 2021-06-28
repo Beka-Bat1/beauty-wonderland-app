@@ -1,44 +1,31 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View, Image, Flatlist, Alert } from "react-native";
-// import { registerRootComponent } from "expo";
-import store from "./store/store";
-import { Provider } from "react-redux";
+import { StyleSheet, Text, View, Alert } from "react-native";
+import { Provider } from 'react-redux'
 
+import * as Font from "expo-font";
+import AppLoading from "expo-app-loading";
+import { useFonts, Poppins_400Regular } from "@expo-google-fonts/poppins";
 import ShopScreen from "./screens/ShopScreen";
 
-import AppLoading from "expo-app-loading";
-import * as Font from "expo-font";
-
-import RootStack from './config/RootStack';
-
-const fetchFonts = () => {
-  return Font.loadAsync({
-    "open-sans": require("./assets/fonts/OpenSans-Regular.ttf"),
-    "poppins": "https://fonts.googleapis.com/css2?family=Poppins&display=swap",
-  });
-};
+import store from "./store/store";
+import RootNavigator from "./navigation/RootNavigator";
 
 export default function App() {
-  const [fontLoaded, setFontLoaded] = useState(false);
+  const [fontsLoaded] = useFonts({ Poppins_400Regular });
+  const [error, setError] = useState("");
 
-  if (!fontLoaded) {
-    return (
-      <AppLoading
-        startAsync={fetchFonts}
-        onFinish={() => {
-          setFontLoaded(true);
-        }}
-        onError={(err) => Alert.alert(err)}
-      />
-    );
+  console.log(fontsLoaded);
+
+  if (!fontsLoaded) {
+    <AppLoading
+      onFinish={() => Alert.alert("Finished")}
+      onError={(err) => Alert.alert(err)}
+    />;
   }
-
 
   return (
     <Provider store={store}>
-      <RootStack />
+      <RootNavigator />
     </Provider>
   );
 }
-
-// registerRootComponent(App);

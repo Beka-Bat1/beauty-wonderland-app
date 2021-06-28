@@ -3,13 +3,13 @@ import thunk from "redux-thunk";
 import productsReducer from "./reducers/products";
 import ordersReducer from "./reducers/orders";
 import cartReducer from "./reducers/cart";
-import authreducer from "./reducers/auth";
+import authReducer from "./reducers/auth";
 
 const rootReducer = combineReducers({
   products: productsReducer,
   cart: cartReducer,
   orders: ordersReducer,
-  auth: authreducer,
+  auth: authReducer,
 });
 
 const middleware = [thunk];

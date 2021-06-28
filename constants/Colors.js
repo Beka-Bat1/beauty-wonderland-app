@@ -5,5 +5,6 @@ export default {
   white: "#dcdcdc",
   white2: "##f9f9f9",
   girlish: "#efdccd",
+  background: "#FFF8EB",
   gray1: "#6c757d",
 };

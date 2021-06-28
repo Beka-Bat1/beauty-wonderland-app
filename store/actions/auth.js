@@ -1,12 +1,9 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-// export const SIGNUP = 'SIGNUP';
-// export const LOGIN = 'LOGIN';
-export const AUTHENTICATE = "AUTHENTICATE";
-export const LOGOUT = "LOGOUT";
+export const SIGNUP = 'SIGNUP';
+export const SIGNIN = 'SIGNIN';
 
-let timer;
 
-export const authenticate = (userId, token, expiryTime) => {
+export const signIn = (userId, token, expiryTime) => {
   return (dispatch) => {
     dispatch(setLogoutTimer(expiryTime));
     dispatch({ type: AUTHENTICATE, userId: userId, token: token });

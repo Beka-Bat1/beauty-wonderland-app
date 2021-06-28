@@ -1,57 +1,14 @@
-// import * as actionTypes from '../actionTypes';
-
-// const initialState = {
-//     availableProducts: null,
-//     error: '',
-// }
-
-// export default (state = initialState, action) => {
-//     switch (action.type) {
-//         case actionTypes.ADD_ITEM:
-//             return {
-//                 ...state,
-//                 data: action.payload,
-//             }
-//         case actionTypes.REMOVE_ITEM:
-//             return {
-//                 data: action.payload,
-//                 error: ''
-//             }
-//         case actionTypes.UPDATE_ITEM:
-//             return {
-//                 data: action.payload,
-//                 error: '',
-//             }
-//         case actionTypes.DELETE_ITEM:
-//                return {
-//                 data: action.payload,
-//                 error: '',
-//             }
-//         case actionTypes.SAVE_ITEM_DATA:
-//               return {
-//                 data: action.payload,
-//                 error: '',
-//             }
-//         case actionTypes.SET_ERROR:
-//             return {
-//                 error: action.payload
-//             }
-
-//         default:
-//             return state;
-//     }
-// }
-
 import PRODUCTS from "../../data/dummy-data";
 import {
   DELETE_PRODUCT,
   CREATE_PRODUCT,
   UPDATE_PRODUCT,
+  SET_PRODUCTS,
 } from "../actions/products";
 import Product from "../../models/product";
 
 const initialState = {
-  availableProducts: PRODUCTS,
+  availableProducts: null,
   userProducts: PRODUCTS.filter((prod) => prod.ownerId === "u1"),
 };
 
@@ -71,6 +28,7 @@ export default (state = initialState, action) => {
         availableProducts: state.availableProducts.concat(newProduct),
         userProducts: state.userProducts.concat(newProduct),
       };
+
     case UPDATE_PRODUCT:
       const productIndex = state.userProducts.findIndex(
         (prod) => prod.id === action.pid
@@ -95,6 +53,13 @@ export default (state = initialState, action) => {
         availableProducts: updatedAvailableProducts,
         userProducts: updatedUserProducts,
       };
+
+    case SET_PRODUCTS:
+      return {
+        availableProducts: action.payload.availableProducts,
+        userProducts: action.payload.userProducts,
+      };
+
     case DELETE_PRODUCT:
       return {
         ...state,

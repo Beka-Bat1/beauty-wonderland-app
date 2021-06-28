@@ -13,10 +13,10 @@ import { LinearGradient } from "expo-linear-gradient";
 import { useDispatch } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 
-import Input from "../../components/UI/Input";
-import Card from "../../components/UI/Card";
-import Colors from "../../constants/Colors";
-import * as authActions from "../../store/actions/auth";
+import Input from "../components/UI/Input";
+import Card from "../components/UI/Card";
+import Colors from "../constants/Colors";
+import * as authActions from "../store/actions/auth";
 
 const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
 
@@ -52,8 +52,8 @@ const AuthScreen = (props) => {
 
   const [formState, dispatchFormState] = useReducer(formReducer, {
     inputValues: {
-      email: "a@a.com",
-      password: "a",
+      email: "",
+      password: "",
     },
     inputValidities: {
       email: false,
@@ -141,16 +141,12 @@ const AuthScreen = (props) => {
               {isLoading ? (
                 <ActivityIndicator size="small" color="black" />
               ) : (
-                <Button
-                  title={isSignup ? "Sign Up" : "Login"}
-                  color="black"
-                  onPress={authHandler}
-                />
+                <Button title="Sign Up" color="black" onPress={authHandler} />
               )}
             </View>
             <View style={styles.buttonContainer}>
               <Button
-                title={`Switch to ${isSignup ? "Login" : "Sign Up"}`}
+                title="Switch to Login"
                 color="black"
                 onPress={() => {
                   setIsSignup((prevState) => !prevState);
