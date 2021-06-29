@@ -37,7 +37,6 @@ const Drawer = createDrawerNavigator();
 const LeftDrawer = () => (
    <Drawer.Navigator
       mode="modal"
-      options={{headerShown: false}}
       drawerContent={(props) => <CustomDrawerContent {...props} />}
       drawerStyle={{paddingVertical: '15%'}}
       drawerContentOptions={{

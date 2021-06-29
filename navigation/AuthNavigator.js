@@ -3,8 +3,8 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { useNavigation } from "@react-navigation/native";
 import { useSelector, useDispatch } from "react-redux";
 
-import Login from "../screens/SignUp";
-import SignUp from "../screens/SignUp";
+import SignInScreen from "../screens/user/SignInScreen";
+import SignUpScreen from "../screens/user/SignUpScreen";
 
 const Stack = createStackNavigator();
 const AuthNavigator = () => {
@@ -19,8 +19,8 @@ const AuthNavigator = () => {
 
   return (
     <Stack.Navigator>
-      <Stack.Screen name='Login' component={Login} />
-      <Stack.Screen name='SignUp' component={SignUp} />
+      <Stack.Screen name='SignIn' component={SignInScreen} />
+      <Stack.Screen name='SignUp' component={SignUpScreen} />
     </Stack.Navigator>
   );
 };

@@ -30,17 +30,6 @@ const ShopScreen = () => {
    let products = useSelector((state) => state.products.availableProducts);
    const {navigate} = useNavigation();
 
-   const loadProducts = useCallback(async () => {
-      setError(null);
-      setIsRefreshing(true);
-      try {
-         await dispatch(fetchProducts());
-      } catch (err) {
-         setError(err.message);
-      }
-      setIsRefreshing(false);
-   }, [dispatch, setIsLoading, setError]);
-
    useFocusEffect(
       useCallback(() => {
          //  scrreen focused
@@ -55,8 +44,19 @@ const ShopScreen = () => {
       });
    }, [dispatch, loadProducts]);
 
+   const loadProducts = useCallback(async () => {
+      setError(null);
+      setIsRefreshing(true);
+      try {
+         await dispatch(fetchProducts());
+      } catch (err) {
+         setError(err.message);
+      }
+      setIsRefreshing(false);
+   }, [dispatch, setIsLoading, setError]);
+
    const selectItemHandler = (id, title) => {
-      navigate('ProductDetail', {
+      navigate('ProductDetailScreen', {
          productId: id,
          productTitle: title,
       });
@@ -123,7 +123,7 @@ const ShopScreen = () => {
                <PrimaryAppButton
                   title="To Cart"
                   onPress={() => {
-                     dispatch(cartActions.addToCart(itemData.item));
+                     dispatch(addToCart(itemData.item));
                   }}
                />
             </ProductItem>
