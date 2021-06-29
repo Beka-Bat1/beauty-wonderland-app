@@ -5,6 +5,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {useSelector} from 'react-redux';
 import {Platform} from 'react-native';
 
+
 import AuthNavigator from './AuthNavigator';
 import LeftDrawer from './LeftDrawer';
 import Modal from '../screens/Modal';
@@ -92,12 +93,12 @@ export default () => {
                name="OrdersScreen"
                component={OrdersScreen}
                options={({navigation, route}) => ({
-                  headerLeft: (props) => (
-                     <HeaderLeft
-                        {...props}
-                        onOpenMenu={() => navigation.toggleDrawer()}
-                     />
-                  ),
+                  // headerLeft: (props) => (
+                  //    <HeaderLeft
+                  //       {...props}
+                  //       onOpenMenu={() => navigation.dispatch(DrawerActions.toggleDrawer())}
+                  //    />
+                  // ),
                   headerTitle: 'Orders',
                   headerTitleStyle: {alignSelf: 'center'},
                })}
@@ -109,6 +110,7 @@ export default () => {
                options={(props) => ({
                   headerTitle: 'Cart',
                   headerTitleStyle: {alignSelf: 'center'},
+                  headerRight: null
                })}
             />
 

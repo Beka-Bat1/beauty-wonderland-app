@@ -3,8 +3,8 @@ import { SIGNUP, SIGNIN, AUTO_LOGIN, SIGNOUT } from "../actions/auth";
 const initialState = {
   token: null,
   userId: null,
-  isAuth: false,
-  isAdmin: false,
+  isAuth: true,
+  isAdmin: true,
 };
 
 export default (state = initialState, action) => {

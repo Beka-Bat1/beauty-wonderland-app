@@ -66,7 +66,6 @@ const styles = StyleSheet.create({
       marginVertical: 20,
    },
    description: {
-      fontFamily: 'poppins',
       fontSize: 14,
       textAlign: 'center',
       marginHorizontal: 20,

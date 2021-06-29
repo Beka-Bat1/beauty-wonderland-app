@@ -1,8 +1,6 @@
 import React from 'react';
-import {creaShopScreenackNavigator} from '@react-navigation/stack';
 import { View, StyleSheet } from 'react-native'
 import {
-   createDrawerNavigator,
    DrawerContentScrollView,
    DrawerItemList,
    DrawerItem,
@@ -16,11 +14,8 @@ import {
 
 import { useSelector } from 'react-redux'
 
-import {AntDesign} from '@expo/vector-icons';
-import {Entypo} from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons'; 
 
-import ShopScreen from '../screens/ShopScreen';
-import Cart from '../screens/CartScreen';
 import Orders from '../screens/OrdersScreen';
 
 
@@ -35,24 +30,22 @@ const CustomDrawerContent = ({navigation, ...props}) => {
        <View
         style={ styles.drawerContent}>
          <DrawerItemList {...props} />
+         <Drawer.Section />
 
-         <Drawer.Section title="User">
+         <Drawer.Section style={{marginLeft: 35 }}>
           <TouchableRipple onPress={() => {navigation.push("OrdersScreen")}} >
             <View style={styles.preference}>
-              <Text>Orders</Text>
+              <Text>შენი შეკვეთები</Text>
             </View>
           </TouchableRipple>
 
-          { isAdmin && <TouchableRipple onPress={() => navigation.navigate("UserProducts")}>
+          { isAdmin && <TouchableRipple onPress={() => navigation.push("UserProducts")}>
             <View style={styles.preference}>
-              <Text>Admin Panel</Text>
+              <Text>ადმინ პანელი</Text>
             </View>
           </TouchableRipple>
           
           }
-
-
-         
         </Drawer.Section>
 
         <DrawerItem
@@ -60,7 +53,7 @@ const CustomDrawerContent = ({navigation, ...props}) => {
             
             onPress={() => navigation.closeDrawer()}
             icon={({size, color}) => (
-               <AntDesign name="close" size={size} color={color} />
+               <FontAwesome name="sign-out" size={24} color="black" />
             )}
             {...props}
          />

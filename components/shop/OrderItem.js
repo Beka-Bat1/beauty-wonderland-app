@@ -72,12 +72,10 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   totalAmount: {
-    fontFamily: "poppins",
     fontSize: 16,
   },
   date: {
     fontSize: 16,
-    fontFamily: "poppins",
     color: "#888",
   },
   detailItems: {

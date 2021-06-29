@@ -19,7 +19,6 @@ import PrimaryAppButton from '../components/UI/buttons/PrimaryAppButton';
 import SecondaryAppButton from '../components/UI/buttons/SecondaryAppButton';
 import {addToCart} from '../store/actions/cart';
 import {fetchProducts} from '../store/actions/products';
-import NavigatorButton from '../settings';
 
 const ShopScreen = () => {
    const [isLoading, setIsLoading] = useState(false);
@@ -76,6 +75,8 @@ const ShopScreen = () => {
    const showAlert = (text) =>
       Alert.alert('Success', text, null, {cancelable: true});
 
+      
+
    if (error) {
       console.log(error);
       Alert.alert(error);
@@ -129,8 +130,11 @@ const ShopScreen = () => {
                <PrimaryAppButton
                   title="To Cart"
                   onPress={() => {
-                     dispatch(addToCart(itemData.item));
+                     showAlert(`${itemData.item.title} has been added to your cart `)
+                      dispatch(addToCart(itemData.item));
                   }}
+
+
                />
             </ProductItem>
          )}

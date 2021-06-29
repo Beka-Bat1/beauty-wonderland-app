@@ -51,7 +51,6 @@ const styles = StyleSheet.create({
     fontSize: 16
   },
   mainText: {
-    fontFamily: 'poppins',
     fontSize: 16
   },
   deleteButton: {

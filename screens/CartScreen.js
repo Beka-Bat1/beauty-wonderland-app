@@ -106,7 +106,6 @@ const styles = StyleSheet.create({
       padding: 10,
    },
    summaryText: {
-      fontFamily: 'poppins',
       fontSize: 18,
    },
    amount: {

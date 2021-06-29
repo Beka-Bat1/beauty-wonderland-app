@@ -65,12 +65,10 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   title: {
-    fontFamily: "poppins",
     fontSize: 18,
     marginVertical: 2,
   },
   price: {
-    fontFamily: "poppins",
     fontSize: 14,
     color: "#888",
   },
