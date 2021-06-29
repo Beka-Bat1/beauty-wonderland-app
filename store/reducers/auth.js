@@ -4,6 +4,7 @@ const initialState = {
   token: null,
   userId: null,
   isAuth: false,
+  isAdmin: false,
 };
 
 export default (state = initialState, action) => {
@@ -13,12 +14,14 @@ export default (state = initialState, action) => {
         token: action.payload.token,
         userId: action.payload.userId,
         isAuth: true,
+        ...state
       };
     case SIGNIN:
       return {
         userId: action.payload.userId,
         token: action.payload.token,
         isAuth: true,
+        ...state
       };
     case SIGNOUT:
       return {

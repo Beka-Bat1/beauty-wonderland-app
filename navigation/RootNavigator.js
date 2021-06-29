@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 
-import {NavigationContainer} from '@react-navigation/native';
+import {NavigationContainer, DrawerActions} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {useSelector} from 'react-redux';
 import {Platform} from 'react-native';
@@ -18,15 +18,15 @@ import CartScreen from '../screens/CartScreen';
 import OrdersScreen from '../screens/OrdersScreen';
 import ProductDetailScreen from '../screens/ProductDetailScreen';
 
+import UserProductsScreen from '../screens/user/UserProductsScreen'
+import EditProductScreen from '../screens/user/EditProductScreen'
+
 import Colors from '../constants/Colors'
-
-import { DrawerActions } from '@react-navigation/native';
-
 
 const RootStack = createStackNavigator();
 export default () => {
    const isAuth = useSelector((rootReducer) => rootReducer.auth.isAuth);
-
+   
    return (
       <NavigationContainer >
          <RootStack.Navigator
@@ -45,6 +45,7 @@ export default () => {
                ),
                headerTitle: 'Shopy Shop',
             })}
+            initialRouteName="AuthNavigator"
             >
             
             {!isAuth && (
@@ -55,7 +56,6 @@ export default () => {
                />
             )}
             
-            {isAuth && (
                <RootStack.Screen name="LeftDrawer" component={LeftDrawer} options={({navigation}) => ({
                   headerLeft: (props) => (
                   <HeaderLeft
@@ -65,7 +65,7 @@ export default () => {
                   />
                )
                })} />
-            )}
+
 
             <RootStack.Screen
                name="Modal"
@@ -111,6 +111,37 @@ export default () => {
                   headerTitleStyle: {alignSelf: 'center'},
                })}
             />
+
+             <RootStack.Screen
+               name="UserProducts"
+               component={UserProductsScreen}
+               options={({navigation, route}) => ({
+                  headerRight: (props) => (
+                     <HeaderRight
+                        {...props}
+                        onOpenCart={() => navigation.navigate('CartScreen')}
+                     />
+                  ),
+                  headerTitle: 'Shopy Shop',
+                  headerTitleStyle: {alignSelf: 'center'},
+               })}
+            />
+
+            <RootStack.Screen
+               name="EditProduct"
+               component={EditProductScreen}
+               options={({navigation, route}) => ({
+                  headerRight: (props) => (
+                     <HeaderRight
+                        {...props}
+                        onOpenCart={() => navigation.navigate('CartScreen')}
+                     />
+                  ),
+                  headerTitle: 'Shopy Shop',
+                  headerTitleStyle: {alignSelf: 'center'},
+               })}
+            />
+
          </RootStack.Navigator>
       </NavigationContainer>
    );

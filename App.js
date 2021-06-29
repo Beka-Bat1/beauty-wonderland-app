@@ -13,9 +13,7 @@ import RootNavigator from "./navigation/RootNavigator";
 export default function App() {
   const [fontsLoaded] = useFonts({ Poppins_400Regular });
   const [error, setError] = useState("");
-
-  console.log(fontsLoaded);
-
+  
   if (!fontsLoaded) {
     <AppLoading
       onFinish={() => Alert.alert("Finished")}

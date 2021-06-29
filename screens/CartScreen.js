@@ -52,7 +52,7 @@ const CartScreen = (props) => {
    return (
       <View style={styles.screen}>
          {isLoading ? (
-            <ActivityIndicator size="large" color="#00ff00" />
+            <ActivityIndicator size="large" color={Colors.background} />
          ) : (
             <>
                <Card style={styles.summary}>

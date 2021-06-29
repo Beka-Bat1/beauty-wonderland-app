@@ -28,7 +28,7 @@ const SignInScreen = () => {
    const [isLoading, setIsLoading] = useState(false);
    const [error, setError] = useState();
    const dispatch = useDispatch();
-   const {navigate, goBack, replace} = useNavigation();
+   const {navigate, goBack , popToTop} = useNavigation();
   const isAuth = useSelector((rootState) => rootState.auth.isAuth);
 
     const FORM_INPUT_UPDATE = 'FORM_INPUT_UPDATE';
@@ -78,14 +78,13 @@ const SignInScreen = () => {
 
   useFocusEffect( 
     useCallback(() => {
-       console.log(isAuth, "isAuth here ")
       if (isAuth) {
+       console.log(isAuth, "replace with Left Drawer ")
       replace("LeftDrawer");
     }
-      
     }, [isAuth])
   );
-
+      
 
    const authHandler = async () => {
       let action = authActions.signIn(
@@ -93,19 +92,17 @@ const SignInScreen = () => {
          formState.inputValues.password,
       );
 
-      console.log(formState.inputValues, "formState.inputValues")
-
       setError(null);
       setIsLoading(true);
       try {
          let response = await dispatch(action)
-         console.log(response)
-         replace('LeftDrawer')
-
+         console.log(response, "login response ")
       } catch (err) {
          setError(err.message);
          setIsLoading(false);
       }
+         navigate("LeftDrawer")
+         setIsLoading(false)
    };
 
    const inputChangeHandler = useCallback(
@@ -131,7 +128,7 @@ const SignInScreen = () => {
          keyboardVerticalOffset={50}
          style={styles.screen}>
          <LinearGradient
-            colors={['#ffedff', '#ffe3ff']}
+            colors={[Colors.girlish, Colors.background]}
             style={styles.gradient}>
             <Card style={styles.authContainer}>
                <ScrollView>

@@ -28,6 +28,9 @@ const ShopScreen = () => {
 
    const dispatch = useDispatch();
    let products = useSelector((state) => state.products.availableProducts);
+   let userId = useSelector(state => state.auth);
+   
+
    const {navigate} = useNavigation();
 
    useFocusEffect(
@@ -37,11 +40,14 @@ const ShopScreen = () => {
       }, []),
    );
 
+   
+
    useEffect(() => {
       setIsLoading(true);
       loadProducts().then(() => {
          setIsLoading(false);
       });
+      console.log(userId, 'userId')
    }, [dispatch, loadProducts]);
 
    const loadProducts = useCallback(async () => {
@@ -140,6 +146,5 @@ const styles = StyleSheet.create({
       backgroundColor: '#fff',
       alignItems: 'center',
       justifyContent: 'center',
-      fontFamily: 'open-sans',
    },
 });

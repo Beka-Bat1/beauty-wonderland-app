@@ -1,12 +1,13 @@
 import React from 'react';
 import {creaShopScreenackNavigator} from '@react-navigation/stack';
-
+import { TouchableOpacity, TouchableNativeFeedback, View, Text } from 'react-native'
 import {
    createDrawerNavigator,
    DrawerContentScrollView,
    DrawerItemList,
    DrawerItem,
 } from '@react-navigation/drawer';
+import { useSelector } from 'react-redux'
 
 import {AntDesign} from '@expo/vector-icons';
 import {Entypo} from '@expo/vector-icons';
@@ -15,22 +16,8 @@ import ShopScreen from '../screens/ShopScreen';
 import Cart from '../screens/CartScreen';
 import Orders from '../screens/OrdersScreen';
 
-const CustomDrawerContent = ({navigation, ...props}) => {
-   return (
-      <DrawerContentScrollView {...props}>
-         <DrawerItem
-            label=""
-            style={{position: 'absolute', right: '-20%', top: '-15%'}}
-            onPress={() => navigation.closeDrawer()}
-            icon={({size, color}) => (
-               <AntDesign name="close" size={size} color={color} />
-            )}
-            {...props}
-         />
-         <DrawerItemList {...props} />
-      </DrawerContentScrollView>
-   );
-};
+import CustomDrawerContent from './CustomDrawerContent'
+
 
 const Drawer = createDrawerNavigator();
 const LeftDrawer = () => (
@@ -46,7 +33,7 @@ const LeftDrawer = () => (
       screenOptions={({navigation}) => ({
          
       })}>
-      
+
       <Drawer.Screen
          name="Home"
          component={ShopScreen}
@@ -166,6 +153,8 @@ const LeftDrawer = () => (
             ),
          }}
       />
+
+
    </Drawer.Navigator>
 );
 

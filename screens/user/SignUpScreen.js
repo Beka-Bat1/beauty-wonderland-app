@@ -12,7 +12,8 @@ import {
 
 import {LinearGradient} from 'expo-linear-gradient';
 import {useDispatch} from 'react-redux';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useFocusEffect } from '@react-navigation/native';
+import { useSelector } from 'react-redux'
 
 import Input from '../../components/UI/Input';
 import Card from '../../components/UI/Card';
@@ -26,12 +27,12 @@ import {styles} from './styles';
 const SignUpScreen = () => {
    const [isLoading, setIsLoading] = useState(false);
    const [error, setError] = useState();
+   let isAuth = useSelector(state => state.auth.isAuth)
    const dispatch = useDispatch();
-   const {navigate, goBack, replace} = useNavigation();
+   const {navigate, replace, goBack} = useNavigation();
 
  const FORM_INPUT_UPDATE = 'FORM_INPUT_UPDATE';
 
-   
  const formReducer = (state, action) => {
   if (action.type === FORM_INPUT_UPDATE) {
     const updatedValues = {
@@ -75,14 +76,12 @@ const SignUpScreen = () => {
 
    useFocusEffect( 
     useCallback(() => {
-       console.log(isAuth, "isAuth here ")
       if (isAuth) {
+       console.log(isAuth, "replacing with LeftDrawer ")
       replace("LeftDrawer");
     }
-      
     }, [isAuth])
   );
-
 
    const authHandler = async () => {
       console.log(formState.inputValues, "formState.inputValues")
@@ -94,9 +93,10 @@ const SignUpScreen = () => {
       setError(null);
       setIsLoading(true);
       try {
-         await dispatch(action);
-         // navigate('LeftDrawer');
-         // setIsLoading(false);
+      replace("LeftDrawer");
+         let response = await dispatch(action)
+         console.log(response, "login response ")
+         setIsLoading(false)
       } catch (err) {
          setError(err.message);
          setIsLoading(false);

@@ -64,7 +64,6 @@ const styles = StyleSheet.create({
       color: '#888',
       textAlign: 'center',
       marginVertical: 20,
-      fontFamily: 'open-sans',
    },
    description: {
       fontFamily: 'poppins',

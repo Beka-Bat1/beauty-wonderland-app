@@ -55,7 +55,6 @@ export const signUp = (email, password) => {
 };
 
 export const signIn = (email, password) => {
-  console.log(email, password, "here ")
   return async dispatch => {
     const response = await fetch(
       'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCMCH-brUV4-ltdKG3MYL0u7whCLp-p7Dc',
@@ -72,8 +71,6 @@ export const signIn = (email, password) => {
       }
     );
 
-    console.log(response)
-
     if (!response.ok) {
       const errorResData = await response.json();
       const errorId = errorResData.error.message;
@@ -87,7 +84,6 @@ export const signIn = (email, password) => {
     }
 
     const resData = await response.json();
-    console.log(resData);
     dispatch(
       authenticate(
         resData.localId,
