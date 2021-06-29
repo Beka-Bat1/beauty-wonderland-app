@@ -2,8 +2,8 @@ import { SIGNUP, SIGNIN, AUTO_LOGIN, SIGNOUT } from "../actions/auth";
 
 const initialState = {
   token: null,
-  userId: "u1",
-  isAuth: true,
+  userId: null,
+  isAuth: false,
 };
 
 export default (state = initialState, action) => {
@@ -12,6 +12,7 @@ export default (state = initialState, action) => {
       return {
         token: action.payload.token,
         userId: action.payload.userId,
+        isAuth: true,
       };
     case SIGNIN:
       return {

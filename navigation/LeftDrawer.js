@@ -27,7 +27,6 @@ const CustomDrawerContent = ({navigation, ...props}) => {
             )}
             {...props}
          />
-
          <DrawerItemList {...props} />
       </DrawerContentScrollView>
    );
@@ -43,7 +42,11 @@ const LeftDrawer = () => (
          drawerIcon: (size, color, focused) => (
             <Entypo name="chevron-thin-right" size={size} color={color} />
          ),
-      }}>
+      }}
+      screenOptions={({navigation}) => ({
+         
+      })}>
+      
       <Drawer.Screen
          name="Home"
          component={ShopScreen}

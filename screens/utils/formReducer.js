@@ -1,3 +1,6 @@
+export const FORM_INPUT_UPDATE = 'FORM_INPUT_UPDATE';
+
+
 export const formReducer = (state, action) => {
   if (action.type === FORM_INPUT_UPDATE) {
     const updatedValues = {

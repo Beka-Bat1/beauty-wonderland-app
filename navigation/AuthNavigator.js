@@ -1,26 +1,18 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useCallback } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { useNavigation } from "@react-navigation/native";
 import { useSelector, useDispatch } from "react-redux";
+import { useFocusEffect } from '@react-navigation/native';
 
 import SignInScreen from "../screens/user/SignInScreen";
 import SignUpScreen from "../screens/user/SignUpScreen";
 
 const Stack = createStackNavigator();
-const AuthNavigator = () => {
-  const isAuth = useSelector((rootState) => rootState.isAuth);
-  const { replace } = useNavigation();
-
-  useEffect(() => {
-    if (isAuth) {
-      replace("LeftDrawer");
-    }
-  }, [isAuth]);
-
+const AuthNavigator = () => {  
   return (
-    <Stack.Navigator>
+    <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="SignIn" >
       <Stack.Screen name='SignIn' component={SignInScreen} />
-      <Stack.Screen name='SignUp' component={SignUpScreen} />
+      <Stack.Screen name='SignUp' component={SignUpScreen}  />
     </Stack.Navigator>
   );
 };

@@ -18,17 +18,42 @@ import Input from '../../components/UI/Input';
 import Card from '../../components/UI/Card';
 import Colors from '../../constants/Colors';
 import * as authActions from '../../store/actions/auth';
-
-import {formReducer} from '../utils/formReducer';
 import {styles} from './styles';
 
-const FORM_INPUT_UPDATE = 'FORM_INPUT_UPDATE';
+// import {formReducer} from '../utils/formReducer';
+// import FORM_INPUT_UPDATE from '../utils/formReducer'
 
 const SignUpScreen = () => {
    const [isLoading, setIsLoading] = useState(false);
    const [error, setError] = useState();
    const dispatch = useDispatch();
    const {navigate, goBack, replace} = useNavigation();
+
+ const FORM_INPUT_UPDATE = 'FORM_INPUT_UPDATE';
+
+   
+ const formReducer = (state, action) => {
+  if (action.type === FORM_INPUT_UPDATE) {
+    const updatedValues = {
+      ...state.inputValues,
+      [action.input]: action.value,
+    };
+    const updatedValidities = {
+      ...state.inputValidities,
+      [action.input]: action.isValid,
+    };
+    let updatedFormIsValid = true;
+    for (const key in updatedValidities) {
+      updatedFormIsValid = updatedFormIsValid && updatedValidities[key];
+    }
+    return {
+      formIsValid: updatedFormIsValid,
+      inputValidities: updatedValidities,
+      inputValues: updatedValues,
+    };
+  }
+  return state;
+};
 
    const [formState, dispatchFormState] = useReducer(formReducer, {
       inputValues: {
@@ -48,7 +73,19 @@ const SignUpScreen = () => {
       }
    }, [error]);
 
+   useFocusEffect( 
+    useCallback(() => {
+       console.log(isAuth, "isAuth here ")
+      if (isAuth) {
+      replace("LeftDrawer");
+    }
+      
+    }, [isAuth])
+  );
+
+
    const authHandler = async () => {
+      console.log(formState.inputValues, "formState.inputValues")
       let action = authActions.signUp(
          formState.inputValues.email,
          formState.inputValues.password,
@@ -58,8 +95,8 @@ const SignUpScreen = () => {
       setIsLoading(true);
       try {
          await dispatch(action);
-         navigate('LeftDrawer');
-         setIsLoading(false);
+         // navigate('LeftDrawer');
+         // setIsLoading(false);
       } catch (err) {
          setError(err.message);
          setIsLoading(false);
@@ -68,6 +105,8 @@ const SignUpScreen = () => {
 
    const inputChangeHandler = useCallback(
       (inputIdentifier, inputValue, inputValidity) => {
+         console.log(inputIdentifier, inputValue, inputValidity, "<-- heree")
+
          dispatchFormState({
             type: FORM_INPUT_UPDATE,
             value: inputValue,
@@ -77,6 +116,10 @@ const SignUpScreen = () => {
       },
       [dispatchFormState],
    );
+
+   const navigationHandler = () => {
+      navigate("SignIn")
+   }
 
    return (
       <KeyboardAvoidingView
@@ -127,9 +170,7 @@ const SignUpScreen = () => {
                      <Button
                         title="Switch to Login"
                         color="black"
-                        onPress={() => {
-                           setIsSignup((prevState) => !prevState);
-                        }}
+                        onPress={navigationHandler}
                      />
                   </View>
                </ScrollView>

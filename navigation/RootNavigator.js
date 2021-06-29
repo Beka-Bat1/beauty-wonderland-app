@@ -18,90 +18,59 @@ import CartScreen from '../screens/CartScreen';
 import OrdersScreen from '../screens/OrdersScreen';
 import ProductDetailScreen from '../screens/ProductDetailScreen';
 
+import Colors from '../constants/Colors'
+
+import { DrawerActions } from '@react-navigation/native';
+
+
 const RootStack = createStackNavigator();
 export default () => {
    const isAuth = useSelector((rootReducer) => rootReducer.auth.isAuth);
 
-   console.log(isAuth, 'isAuth');
-
    return (
-      <NavigationContainer
-      // screenOptions={({navigation, route}) => ({
-      //    headerLeft: (props) => (
-      //       <HeaderLeft
-      //          {...props}
-      //          onOpenMenu={() => navigation.toggleDrawer()}
-      //       />
-      //    ),
-      //    headerRight: (props) => (
-      //       <HeaderRight
-      //          {...props}
-      //          onOpenCart={() => navigation.navigate('CartScreen')}
-      //       />
-      //    ),
-      //    headerTitle: 'Shopy Shop',
-      //    headerTitleStyle: {alignSelf: 'center'},
-      // })}>
-      >
+      <NavigationContainer >
          <RootStack.Navigator
             mode="modal"
             screenOptions={({navigation, route}) => ({
                headerStyle: {
-                  backgroundColor: Platform.OS === 'android' ? 'black' : '',
+                  backgroundColor: Platform.OS === 'android' ? Colors.gray1 : '',
                },
                headerTintColor: Platform.OS === 'android' ? 'white' : 'black',
-
-               headerLeft: (props) => (
-                  <HeaderLeft
-                     {...props}
-                     onOpenMenu={() => navigation.toggleDrawer()}
-                  />
-               ),
+               
                headerRight: (props) => (
                   <HeaderRight
                      {...props}
-                     onOpenCart={() => navigation.navigate('CartScreen')}
+                     onOpenCart={() => navigation.push('CartScreen')}
                   />
                ),
                headerTitle: 'Shopy Shop',
-            })}>
+            })}
+            >
             
             {!isAuth && (
                <RootStack.Screen
                   name="AuthNavigator"
                   component={AuthNavigator}
+                  options={{ headerShown: false }}
                />
             )}
+            
             {isAuth && (
-               <RootStack.Screen name="LeftDrawer" component={LeftDrawer} />
+               <RootStack.Screen name="LeftDrawer" component={LeftDrawer} options={({navigation}) => ({
+                  headerLeft: (props) => (
+                  <HeaderLeft
+                     {...props}
+                     
+                     onOpenMenu={() => navigation.dispatch(DrawerActions.toggleDrawer())}
+                  />
+               )
+               })} />
             )}
 
             <RootStack.Screen
                name="Modal"
                component={Modal}
                options={{animationEnabled: true}}
-            />
-
-            <RootStack.Screen
-               name="ShopScreen"
-               component={ShopScreen}
-               headerMode="screen"
-               options={({navigation, route}) => ({
-                  headerLeft: (props) => (
-                     <HeaderLeft
-                        {...props}
-                        onOpenMenu={() => navigation.toggleDrawer()}
-                     />
-                  ),
-                  headerRight: (props) => (
-                     <HeaderRight
-                        {...props}
-                        onOpenCart={() => navigation.navigate('CartScreen')}
-                     />
-                  ),
-                  headerTitle: 'Shopy Shop',
-                  headerTitleStyle: {alignSelf: 'center'},
-               })}
             />
 
             <RootStack.Screen
@@ -137,10 +106,10 @@ export default () => {
             <RootStack.Screen
                name="CartScreen"
                component={CartScreen}
-               options={{
+               options={(props) => ({
                   headerTitle: 'Cart',
                   headerTitleStyle: {alignSelf: 'center'},
-               }}
+               })}
             />
          </RootStack.Navigator>
       </NavigationContainer>
