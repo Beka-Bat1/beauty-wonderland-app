@@ -125,7 +125,7 @@ export const updateProduct = (id, title, description, imageUrl, tag) => {
                title,
                description,
                imageUrl,
-               tag
+               tag,
             }),
          },
       );
@@ -142,7 +142,7 @@ export const updateProduct = (id, title, description, imageUrl, tag) => {
             title,
             description,
             imageUrl,
-            tag
+            tag,
          },
 
          }

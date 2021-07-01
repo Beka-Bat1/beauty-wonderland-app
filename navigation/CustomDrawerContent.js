@@ -49,8 +49,8 @@ const CustomDrawerContent = ({navigation, ...props}) => {
             <DrawerItem
                label="Sign Out"
                onPress={() => {
-                  navigation.navigate('AuthNavigator');
                   dispatch(authActions.signOut());
+                  // navigation.navigate('AuthNavigator');
                }}
                icon={({size, color}) => (
                   <FontAwesome name="sign-out" size={24} color="black" />
