@@ -12,8 +12,8 @@ import {
 
 import {LinearGradient} from 'expo-linear-gradient';
 import {useDispatch} from 'react-redux';
-import {useNavigation, useFocusEffect } from '@react-navigation/native';
-import { useSelector } from 'react-redux'
+import {useNavigation, useFocusEffect} from '@react-navigation/native';
+import {useSelector} from 'react-redux';
 
 import Input from '../../components/UI/Input';
 import Card from '../../components/UI/Card';
@@ -27,34 +27,34 @@ import {styles} from './styles';
 const SignUpScreen = () => {
    const [isLoading, setIsLoading] = useState(false);
    const [error, setError] = useState();
-   let isAuth = useSelector(state => state.auth.isAuth)
+   let isAuth = useSelector((state) => state.auth.isAuth);
    const dispatch = useDispatch();
    const {navigate, replace, goBack} = useNavigation();
 
- const FORM_INPUT_UPDATE = 'FORM_INPUT_UPDATE';
+   const FORM_INPUT_UPDATE = 'FORM_INPUT_UPDATE';
 
- const formReducer = (state, action) => {
-  if (action.type === FORM_INPUT_UPDATE) {
-    const updatedValues = {
-      ...state.inputValues,
-      [action.input]: action.value,
-    };
-    const updatedValidities = {
-      ...state.inputValidities,
-      [action.input]: action.isValid,
-    };
-    let updatedFormIsValid = true;
-    for (const key in updatedValidities) {
-      updatedFormIsValid = updatedFormIsValid && updatedValidities[key];
-    }
-    return {
-      formIsValid: updatedFormIsValid,
-      inputValidities: updatedValidities,
-      inputValues: updatedValues,
-    };
-  }
-  return state;
-};
+   const formReducer = (state, action) => {
+      if (action.type === FORM_INPUT_UPDATE) {
+         const updatedValues = {
+            ...state.inputValues,
+            [action.input]: action.value,
+         };
+         const updatedValidities = {
+            ...state.inputValidities,
+            [action.input]: action.isValid,
+         };
+         let updatedFormIsValid = true;
+         for (const key in updatedValidities) {
+            updatedFormIsValid = updatedFormIsValid && updatedValidities[key];
+         }
+         return {
+            formIsValid: updatedFormIsValid,
+            inputValidities: updatedValidities,
+            inputValues: updatedValues,
+         };
+      }
+      return state;
+   };
 
    const [formState, dispatchFormState] = useReducer(formReducer, {
       inputValues: {
@@ -74,17 +74,17 @@ const SignUpScreen = () => {
       }
    }, [error]);
 
-   useFocusEffect( 
-    useCallback(() => {
-      if (isAuth) {
-       console.log(isAuth, "replacing with LeftDrawer ")
-      replace("LeftDrawer");
-    }
-    }, [isAuth])
-  );
+   useFocusEffect(
+      useCallback(() => {
+         if (isAuth) {
+            console.log(isAuth, 'replacing with LeftDrawer ');
+            replace('LeftDrawer');
+         }
+      }, [isAuth]),
+   );
 
    const authHandler = async () => {
-      console.log(formState.inputValues, "formState.inputValues")
+      console.log(formState.inputValues, 'formState.inputValues');
       let action = authActions.signUp(
          formState.inputValues.email,
          formState.inputValues.password,
@@ -93,19 +93,20 @@ const SignUpScreen = () => {
       setError(null);
       setIsLoading(true);
       try {
-      replace("LeftDrawer");
-         let response = await dispatch(action)
-         console.log(response, "login response ")
-         setIsLoading(false)
+         replace('LeftDrawer');
+         let response = await dispatch(action);
+         console.log(response, 'login response ');
       } catch (err) {
          setError(err.message);
          setIsLoading(false);
       }
+
+      setIsLoading(false);
    };
 
    const inputChangeHandler = useCallback(
       (inputIdentifier, inputValue, inputValidity) => {
-         console.log(inputIdentifier, inputValue, inputValidity, "<-- heree")
+         console.log(inputIdentifier, inputValue, inputValidity, '<-- heree');
 
          dispatchFormState({
             type: FORM_INPUT_UPDATE,
@@ -118,8 +119,8 @@ const SignUpScreen = () => {
    );
 
    const navigationHandler = () => {
-      navigate("SignIn")
-   }
+      navigate('SignIn');
+   };
 
    return (
       <KeyboardAvoidingView

@@ -1,5 +1,9 @@
 import React, {useState, useEffect, useCallback} from 'react';
-import {useFocusEffect, useNavigation} from '@react-navigation/native';
+import {
+   useFocusEffect,
+   useNavigation,
+   useRoute,
+} from '@react-navigation/native';
 
 import {useSelector, useDispatch} from 'react-redux';
 import {
@@ -24,13 +28,13 @@ const ShopScreen = () => {
    const [isLoading, setIsLoading] = useState(false);
    const [isRefreshing, setIsRefreshing] = useState(false);
    const [error, setError] = useState('');
-
-   const dispatch = useDispatch();
-   let products = useSelector((state) => state.products.availableProducts);
-   let userId = useSelector(state => state.auth);
-   
-
    const {navigate} = useNavigation();
+   const dispatch = useDispatch();
+   const route = useRoute();
+
+   let products = useSelector((state) => state.products.availableProducts);
+   let userId = useSelector((state) => state.auth);
+   const filterName = route?.params;
 
    useFocusEffect(
       useCallback(() => {
@@ -39,15 +43,17 @@ const ShopScreen = () => {
       }, []),
    );
 
-   
-
    useEffect(() => {
       setIsLoading(true);
       loadProducts().then(() => {
          setIsLoading(false);
       });
-      console.log(userId, 'userId')
+      console.log(userId, 'userId');
    }, [dispatch, loadProducts]);
+
+   // useEffect(() => {
+   //    products = poducts.filter((product) => product.tag === filterName);
+   // }, [filterName]);
 
    const loadProducts = useCallback(async () => {
       setError(null);
@@ -74,8 +80,6 @@ const ShopScreen = () => {
 
    const showAlert = (text) =>
       Alert.alert('Success', text, null, {cancelable: true});
-
-      
 
    if (error) {
       console.log(error);
@@ -130,11 +134,11 @@ const ShopScreen = () => {
                <PrimaryAppButton
                   title="To Cart"
                   onPress={() => {
-                     showAlert(`${itemData.item.title} has been added to your cart `)
-                      dispatch(addToCart(itemData.item));
+                     showAlert(
+                        `${itemData.item.title} has been added to your cart `,
+                     );
+                     dispatch(addToCart(itemData.item));
                   }}
-
-
                />
             </ProductItem>
          )}

@@ -7,9 +7,7 @@ import {
    DrawerItemList,
    DrawerItem,
 } from '@react-navigation/drawer';
-import { useSelector } from 'react-redux'
 
-import {AntDesign} from '@expo/vector-icons';
 import {Entypo} from '@expo/vector-icons';
 
 import ShopScreen from '../screens/ShopScreen';
@@ -37,7 +35,6 @@ const LeftDrawer = () => (
       <Drawer.Screen
          name="Home"
          component={ShopScreen}
-         initialParams={{params: 'Home'}}
          options={{
             drawerLabel: 'მთავარი',
             drawerIcon: (focused, color, size) => (
@@ -87,8 +84,8 @@ const LeftDrawer = () => (
 
       <Drawer.Screen
          name="Cosmetics"
-         component={ShopScreen}
          initialParams={{params: 'Cosmetics'}}
+         component={ShopScreen}
          options={{
             drawerLabel: 'კოსმეტიკა',
 
@@ -105,8 +102,8 @@ const LeftDrawer = () => (
 
       <Drawer.Screen
          name="Body"
-         component={ShopScreen}
          initialParams={{params: 'Body'}}
+         component={ShopScreen}
          options={{
             drawerLabel: 'აქსესუარები',
             drawerIcon: (focused, size, color) => (
@@ -122,8 +119,8 @@ const LeftDrawer = () => (
 
       <Drawer.Screen
          name="Hear"
-         component={ShopScreen}
          initialParams={{params: 'Hear'}}
+         component={ShopScreen}
          options={{
             drawerLabel: 'თმის მოვლა',
             drawerIcon: (focused, size, color) => (
@@ -139,8 +136,8 @@ const LeftDrawer = () => (
 
       <Drawer.Screen
          name="Accessories"
-         component={ShopScreen}
          initialParams={{params: 'Accessories'}}
+         component={ShopScreen}
          options={{
             drawerLabel: 'აქსესუარები',
             drawerIcon: (focused, size, color) => (

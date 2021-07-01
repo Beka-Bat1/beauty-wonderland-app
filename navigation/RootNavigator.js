@@ -1,10 +1,15 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 
-import {NavigationContainer, DrawerActions} from '@react-navigation/native';
+import {
+   NavigationContainer,
+   DrawerActions,
+   useNavigation,
+   StackActions,
+} from '@react-navigation/native';
+
 import {createStackNavigator} from '@react-navigation/stack';
 import {useSelector} from 'react-redux';
 import {Platform} from 'react-native';
-
 
 import AuthNavigator from './AuthNavigator';
 import LeftDrawer from './LeftDrawer';
@@ -19,54 +24,74 @@ import CartScreen from '../screens/CartScreen';
 import OrdersScreen from '../screens/OrdersScreen';
 import ProductDetailScreen from '../screens/ProductDetailScreen';
 
-import UserProductsScreen from '../screens/user/UserProductsScreen'
-import EditProductScreen from '../screens/user/EditProductScreen'
+import UserProductsScreen from '../screens/user/UserProductsScreen';
+import EditProductScreen from '../screens/user/EditProductScreen';
 
-import Colors from '../constants/Colors'
+import Colors from '../constants/Colors';
 
 const RootStack = createStackNavigator();
 export default () => {
+   const navRef = useRef();
    const isAuth = useSelector((rootReducer) => rootReducer.auth.isAuth);
-   
+   const navigation = useNavigation();
+
+   useEffect(() => {
+      if (!isAuth) {
+         navRef.current.dispatch(navigate('AuthNavigator'));
+         navigation.dispatch(StackActions.popToTop());
+      }
+   }, [isAuth]);
+
    return (
-      <NavigationContainer >
+      <NavigationContainer>
          <RootStack.Navigator
+            ref={navRef}
             mode="modal"
             screenOptions={({navigation, route}) => ({
                headerStyle: {
-                  backgroundColor: Platform.OS === 'android' ? Colors.gray1 : '',
+                  backgroundColor:
+                     Platform.OS === 'android' ? Colors.black : '',
                },
-               headerTintColor: Platform.OS === 'android' ? 'white' : 'black',
-               
+               headerTintColor:
+                  Platform.OS === 'android' ? Colors.white : Colors.black,
+
                headerRight: (props) => (
                   <HeaderRight
                      {...props}
                      onOpenCart={() => navigation.push('CartScreen')}
+                     color={Colors.white}
                   />
                ),
                headerTitle: 'Shopy Shop',
             })}
-            initialRouteName="AuthNavigator"
-            >
-            
-            {!isAuth && (
-               <RootStack.Screen
-                  name="AuthNavigator"
-                  component={AuthNavigator}
-                  options={{ headerShown: false }}
-               />
-            )}
-            
-               <RootStack.Screen name="LeftDrawer" component={LeftDrawer} options={({navigation}) => ({
-                  headerLeft: (props) => (
-                  <HeaderLeft
-                     {...props}
-                     
-                     onOpenMenu={() => navigation.dispatch(DrawerActions.toggleDrawer())}
-                  />
-               )
-               })} />
+            initialRouteName="LoadingScreen">
+            <RootStack.Screen
+               name="LoadingScreen"
+               component={Loading}
+               mode="modal"
+               options={{headerShown: false}}
+            />
 
+            <RootStack.Screen
+               name="AuthNavigator"
+               component={AuthNavigator}
+               options={{headerShown: false}}
+            />
+
+            <RootStack.Screen
+               name="LeftDrawer"
+               component={LeftDrawer}
+               options={({navigation}) => ({
+                  headerLeft: (props) => (
+                     <HeaderLeft
+                        {...props}
+                        onOpenMenu={() =>
+                           navigation.dispatch(DrawerActions.toggleDrawer())
+                        }
+                     />
+                  ),
+               })}
+            />
 
             <RootStack.Screen
                name="Modal"
@@ -93,12 +118,6 @@ export default () => {
                name="OrdersScreen"
                component={OrdersScreen}
                options={({navigation, route}) => ({
-                  // headerLeft: (props) => (
-                  //    <HeaderLeft
-                  //       {...props}
-                  //       onOpenMenu={() => navigation.dispatch(DrawerActions.toggleDrawer())}
-                  //    />
-                  // ),
                   headerTitle: 'Orders',
                   headerTitleStyle: {alignSelf: 'center'},
                })}
@@ -110,11 +129,11 @@ export default () => {
                options={(props) => ({
                   headerTitle: 'Cart',
                   headerTitleStyle: {alignSelf: 'center'},
-                  headerRight: null
+                  headerRight: null,
                })}
             />
 
-             <RootStack.Screen
+            <RootStack.Screen
                name="UserProducts"
                component={UserProductsScreen}
                options={({navigation, route}) => ({
@@ -132,18 +151,10 @@ export default () => {
             <RootStack.Screen
                name="EditProduct"
                component={EditProductScreen}
-               options={({navigation, route}) => ({
-                  headerRight: (props) => (
-                     <HeaderRight
-                        {...props}
-                        onOpenCart={() => navigation.navigate('CartScreen')}
-                     />
-                  ),
-                  headerTitle: 'Shopy Shop',
+               options={{
                   headerTitleStyle: {alignSelf: 'center'},
-               })}
+               }}
             />
-
          </RootStack.Navigator>
       </NavigationContainer>
    );

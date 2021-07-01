@@ -8,10 +8,8 @@ import Colors from '../../constants/Colors'
 
 const HeaderRight = ({...props}) => {
    const openCart = () => props.onOpenCart();
-   const totalAmount = useSelector(state => state.cart.totalAmount)
-   console.log(props, totalAmount, "totalAmount")
-
-
+   let totalAmount = useSelector(state => state.cart.items)
+   totalAmount = Object.keys(totalAmount).length
 
    return (
    <TouchableOpacity onPress={openCart} style={styles.iconRight}>
@@ -21,11 +19,9 @@ const HeaderRight = ({...props}) => {
          <Ionicons
             name={Platform.OS === 'android' ? 'md-cart' : 'ios-cart'}
             size={28}
-            color="black"
+            color={Colors.white}
          />
       </TouchableOpacity>
-
-   
    );
 };
 

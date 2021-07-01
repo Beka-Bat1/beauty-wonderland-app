@@ -14,8 +14,6 @@ export const fetchProducts = () => {
             'https://beauty-wonderland-e913c-default-rtdb.firebaseio.com/products.json',
          );
 
-         console.log(response, 'response after firebase call ');
-
          if (!response.ok) {
             throw new Error('Something went wrong!');
          }
@@ -70,11 +68,14 @@ export const deleteProduct = (productId) => {
    };
 };
 
-export const createProduct = (title, description, imageUrl, price) => {
+export const createProduct = (title, description, imageUrl, price, tag) => {
+   console.log(title, description, imageUrl, price, tag, "create Product params")
    return async (dispatch, getState) => {
       // any async code you want!
+      debugger
       const token = getState().auth.token;
       const userId = getState().auth.userId;
+      console.log(token, userId, "<==== here")
       const response = await fetch(
          `https://beauty-wonderland-e913c-default-rtdb.firebaseio.com/products.json?auth=${token}`,
          {
@@ -87,6 +88,7 @@ export const createProduct = (title, description, imageUrl, price) => {
                description,
                imageUrl,
                price,
+               tag,
                ownerId: userId,
             }),
          },
@@ -103,12 +105,13 @@ export const createProduct = (title, description, imageUrl, price) => {
             imageUrl,
             price,
             ownerId: userId,
+            tag,
          },
       });
    };
 };
 
-export const updateProduct = (id, title, description, imageUrl) => {
+export const updateProduct = (id, title, description, imageUrl, tag) => {
    return async (dispatch, getState) => {
       const token = getState().auth.token;
       const response = await fetch(
@@ -122,6 +125,7 @@ export const updateProduct = (id, title, description, imageUrl) => {
                title,
                description,
                imageUrl,
+               tag
             }),
          },
       );
@@ -132,12 +136,16 @@ export const updateProduct = (id, title, description, imageUrl) => {
 
       dispatch({
          type: UPDATE_PRODUCT,
-         pid: id,
+         payload: {
+               pid: id,
          productData: {
             title,
             description,
             imageUrl,
+            tag
          },
+
+         }
       });
    };
 };

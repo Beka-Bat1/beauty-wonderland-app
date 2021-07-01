@@ -8,20 +8,22 @@ import {
 import Product from "../../models/product";
 
 const initialState = {
-  availableProducts: null,
-  userProducts: PRODUCTS.filter((prod) => prod.ownerId === "u1"),
+  availableProducts: [],
+  userProducts: [],
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
     case CREATE_PRODUCT:
       const newProduct = new Product(
-        new Date().toString(),
-        "u1",
+        action.productData.id,
+        action.productData.ownerId,
         action.productData.title,
         action.productData.imageUrl,
         action.productData.description,
-        action.productData.price
+        action.productData.price,
+                action.productData.tag
+
       );
       return {
         ...state,
@@ -34,11 +36,13 @@ export default (state = initialState, action) => {
         (prod) => prod.id === action.pid
       );
       const updatedProduct = new Product(
-        action.pid,
+        action.payload.pid,
         state.userProducts[productIndex].ownerId,
-        action.productData.title,
-        action.productData.imageUrl,
-        action.productData.description,
+        action.payload.productData.title,
+        action.payload.productData.imageUrl,
+        action.payload.productData.description,
+                action.payload.productData.tag,
+
         state.userProducts[productIndex].price
       );
       const updatedUserProducts = [...state.userProducts];
