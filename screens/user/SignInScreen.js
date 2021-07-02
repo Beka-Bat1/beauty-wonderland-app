@@ -19,43 +19,42 @@ import Card from '../../components/UI/Card';
 import Colors from '../../constants/Colors';
 import * as authActions from '../../store/actions/auth';
 
-import { useSelector } from 'react-redux'
-import { useFocusEffect } from '@react-navigation/native'
+import {useSelector} from 'react-redux';
+import {useFocusEffect} from '@react-navigation/native';
 
-import { styles } from './styles';
+import {styles} from './styles';
 
 const SignInScreen = () => {
    const [isLoading, setIsLoading] = useState(false);
    const [error, setError] = useState();
    const dispatch = useDispatch();
-   const {navigate, goBack , popToTop} = useNavigation();
-  const isAuth = useSelector((rootState) => rootState.auth.isAuth);
+   const {navigate, goBack, popToTop} = useNavigation();
+   const isAuth = useSelector((rootState) => rootState.auth.isAuth);
 
-    const FORM_INPUT_UPDATE = 'FORM_INPUT_UPDATE';
-    
+   const FORM_INPUT_UPDATE = 'FORM_INPUT_UPDATE';
+
    const formReducer = (state, action) => {
-   if (action.type === FORM_INPUT_UPDATE) {
-      const updatedValues = {
-         ...state.inputValues,
-         [action.input]: action.value,
-      };
-      const updatedValidities = {
-         ...state.inputValidities,
-         [action.input]: action.isValid,
-      };
-      let updatedFormIsValid = true;
-      for (const key in updatedValidities) {
-         updatedFormIsValid = updatedFormIsValid && updatedValidities[key];
+      if (action.type === FORM_INPUT_UPDATE) {
+         const updatedValues = {
+            ...state.inputValues,
+            [action.input]: action.value,
+         };
+         const updatedValidities = {
+            ...state.inputValidities,
+            [action.input]: action.isValid,
+         };
+         let updatedFormIsValid = true;
+         for (const key in updatedValidities) {
+            updatedFormIsValid = updatedFormIsValid && updatedValidities[key];
+         }
+         return {
+            formIsValid: updatedFormIsValid,
+            inputValidities: updatedValidities,
+            inputValues: updatedValues,
+         };
       }
-      return {
-         formIsValid: updatedFormIsValid,
-         inputValidities: updatedValidities,
-         inputValues: updatedValues,
-      };
-   }
-   return state;
+      return state;
    };
-
 
    const [formState, dispatchFormState] = useReducer(formReducer, {
       inputValues: {
@@ -75,34 +74,31 @@ const SignInScreen = () => {
       }
    }, [error]);
 
-
-  useFocusEffect( 
-    useCallback(() => {
-      if (isAuth) {
-       console.log(isAuth, "replace with Left Drawer ")
-      replace("LeftDrawer");
-    }
-    }, [isAuth])
-  );
-      
+   useFocusEffect(
+      useCallback(() => {
+         if (isAuth) {
+            console.log(isAuth, 'replace with Left Drawer ');
+            navigate('LeftDrawer');
+         }
+      }, [isAuth]),
+   );
 
    const authHandler = async () => {
       let action = authActions.signIn(
          formState.inputValues.email,
          formState.inputValues.password,
       );
-
       setError(null);
       setIsLoading(true);
       try {
-         let response = await dispatch(action)
-         console.log(response, "login response ")
+         dispatch(action);
       } catch (err) {
          setError(err.message);
+         // navigate('LeftDrawer');
          setIsLoading(false);
       }
-         navigate("LeftDrawer")
-         setIsLoading(false)
+      console.log(isAuth, 'is authenticated before navigating to shop');
+      setIsLoading(false);
    };
 
    const inputChangeHandler = useCallback(
@@ -117,10 +113,9 @@ const SignInScreen = () => {
       [dispatchFormState],
    );
 
-
    const navigationHandler = () => {
-      navigate("SignUp")
-   }
+      navigate('SignUp');
+   };
 
    return (
       <KeyboardAvoidingView
@@ -179,7 +174,6 @@ const SignInScreen = () => {
          </LinearGradient>
       </KeyboardAvoidingView>
    );
-}
+};
 
-
-export default SignInScreen
+export default SignInScreen;

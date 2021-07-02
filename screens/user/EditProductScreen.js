@@ -59,15 +59,15 @@ const EditProductScreen = (props) => {
          title: editedProduct ? editedProduct.title : '',
          imageUrl: editedProduct ? editedProduct.imageUrl : '',
          description: editedProduct ? editedProduct.description : '',
-         tag: editedProduct ? editedProduct.description : '',
          price: '',
+         tag: editedProduct ? editedProduct.description : '',
       },
       inputValidities: {
          title: editedProduct ? true : false,
          imageUrl: editedProduct ? true : false,
          description: editedProduct ? true : false,
-         tag: editedProduct ? true : false,
          price: editedProduct ? true : false,
+         tag: editedProduct ? true : false,
       },
       formIsValid: editedProduct ? true : false,
    });
@@ -99,7 +99,6 @@ const EditProductScreen = (props) => {
                ),
             );
          } else {
-            debugger;
             console.log(inputValues, 'input starts here ');
             await dispatch(
                productsActions.createProduct(
@@ -212,11 +211,10 @@ const EditProductScreen = (props) => {
                   errorText="Please enter a valid tag name!"
                   initialValue={editedProduct ? editedProduct.tag : ''}
                   initiallyValid={!!editedProduct}
-                  selectedValue={editedProduct ? editedProduct.tag : ''}
+                  // selectedValue={editedProduct ? editedProduct.tag : 'Face'}
                   onValueChange={(itemValue, itemIndex) =>
                      inputChangeHandler(itemValue)
                   }>
-                  <Picker.Item label="Brands" value="Brands" />
                   <Picker.Item label="Face" value="Face" />
                   <Picker.Item label="Cosmetics" value="Cosmetics" />
                   <Picker.Item label="Body" value="Body" />

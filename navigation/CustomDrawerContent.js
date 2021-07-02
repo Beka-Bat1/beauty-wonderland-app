@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, Alert} from 'react-native';
 import {
    DrawerContentScrollView,
    DrawerItemList,
@@ -15,7 +15,6 @@ import Orders from '../screens/OrdersScreen';
 
 const CustomDrawerContent = ({navigation, ...props}) => {
    const isAdmin = useSelector((state) => state.auth.isAdmin);
-
    const dispatch = useDispatch();
 
    // let touchable = Platform.OS === 'android' && Platform.version >= 21 ? <TouchableNativeFeedback /> : <TouchableOpacity />
@@ -50,7 +49,8 @@ const CustomDrawerContent = ({navigation, ...props}) => {
                label="Sign Out"
                onPress={() => {
                   dispatch(authActions.signOut());
-                  // navigation.navigate('AuthNavigator');
+                  Alert.alert("you've signed out", 'Okay');
+                  navigation.navigate('AuthNavigator');
                }}
                icon={({size, color}) => (
                   <FontAwesome name="sign-out" size={24} color="black" />

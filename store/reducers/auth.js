@@ -11,19 +11,21 @@ export default (state = initialState, action) => {
    switch (action.type) {
       case SIGNUP:
          return {
+            ...state,
             token: action.payload.token,
             userId: action.payload.userId,
             isAuth: true,
-            ...state,
          };
       case AUTHENTICATE:
+      console.log('auhtenticated')
          return {
+            ...state,
             userId: action.payload.userId,
             token: action.payload.token,
             isAuth: true,
-            ...state,
          };
       case SIGNOUT:
+      console.log("signing out in reducer")
          return {
             ...initialState,
             isAuth: false,
