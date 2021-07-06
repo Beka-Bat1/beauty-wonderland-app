@@ -84,7 +84,6 @@ export const signIn = (email, password) => {
          throw new Error(message);
       }
       const resData = await response.json();
-      console.log(resData, 'firebase auth response');
       dispatch(
          authenticate(
             resData.localId,
@@ -103,7 +102,6 @@ export const signIn = (email, password) => {
 
 export const signOut = () => {
    clearLogoutTimer();
-   debugger;
    try {
       console.log('remove Item');
       AsyncStorage.removeItem('userData');

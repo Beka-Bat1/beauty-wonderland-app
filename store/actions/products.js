@@ -71,8 +71,6 @@ export const deleteProduct = (productId) => {
 export const createProduct = (title, description, imageUrl, price, tag) => {
    console.log(title, description, imageUrl, price, tag, "create Product params")
    return async (dispatch, getState) => {
-      // any async code you want!
-      debugger
       const token = getState().auth.token;
       const userId = getState().auth.userId;
       console.log(token, userId, "<==== here")

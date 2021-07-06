@@ -14,7 +14,7 @@ export default ({ navigation }) => (
       style={{ backgroundColor: 'white', padding: 20 }}
       onPress={() => navigation.pop()}
     >
-      <Text><ActivityIndicator /> </Text>
+      <Text>Hello i am Modal </Text>
     </TouchableOpacity>
   </View>
 );

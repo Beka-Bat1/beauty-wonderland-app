@@ -77,7 +77,6 @@ const SignUpScreen = () => {
    useFocusEffect(
       useCallback(() => {
          if (isAuth) {
-            console.log(isAuth, 'replacing with LeftDrawer ');
             replace('LeftDrawer');
          }
       }, [isAuth]),
@@ -95,7 +94,6 @@ const SignUpScreen = () => {
       try {
          replace('LeftDrawer');
          let response = await dispatch(action);
-         console.log(response, 'login response ');
       } catch (err) {
          setError(err.message);
          setIsLoading(false);

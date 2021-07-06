@@ -10,25 +10,26 @@ import {useSelector, useDispatch} from 'react-redux';
 import {FontAwesome} from '@expo/vector-icons';
 import {DrawerActions} from '@react-navigation/native';
 
+
 import * as authActions from '../store/actions/auth';
 import Orders from '../screens/OrdersScreen';
 
-const CustomDrawerContent = ({navigation, ...props}) => {
+const CustomDrawerContent = (props) => {
    const isAdmin = useSelector((state) => state.auth.isAdmin);
    const dispatch = useDispatch();
 
    // let touchable = Platform.OS === 'android' && Platform.version >= 21 ? <TouchableNativeFeedback /> : <TouchableOpacity />
 
    return (
-      <DrawerContentScrollView {...props}>
-         <View style={styles.drawerContent}>
+      <DrawerContentScrollView {...props} style={styles.drawerContent}>
+             {/* TODO make animations */}
             <DrawerItemList {...props} />
             <Drawer.Section />
 
             <Drawer.Section style={{marginLeft: 35}}>
                <TouchableRipple
                   onPress={() => {
-                     navigation.push('OrdersScreen');
+                     props.navigation.push('OrdersScreen');
                   }}>
                   <View style={styles.preference}>
                      <Text>შენი შეკვეთები</Text>
@@ -37,7 +38,7 @@ const CustomDrawerContent = ({navigation, ...props}) => {
 
                {isAdmin && (
                   <TouchableRipple
-                     onPress={() => navigation.push('EditProduct')}>
+                     onPress={() => props.navigation.push('EditProduct')}>
                      <View style={styles.preference}>
                         <Text>ადმინ პანელი</Text>
                      </View>
@@ -48,16 +49,15 @@ const CustomDrawerContent = ({navigation, ...props}) => {
             <DrawerItem
                label="Sign Out"
                onPress={() => {
-                  dispatch(authActions.signOut());
+                  dispatch(authActions.signOut())
                   Alert.alert("you've signed out", 'Okay');
-                  navigation.navigate('AuthNavigator');
+                  props.navigation.replace('AuthNavigator');
+                  // navigate('AuthNavigator');
                }}
                icon={({size, color}) => (
                   <FontAwesome name="sign-out" size={24} color="black" />
                )}
-               {...props}
             />
-         </View>
       </DrawerContentScrollView>
    );
 };

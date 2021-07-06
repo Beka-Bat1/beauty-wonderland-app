@@ -12,13 +12,10 @@ export default () => {
    useEffect(() => {
       const trySignup = async () => {
          try {
-            console.log('before asyncStorage ');
             const userData = await AsyncStorage.getItem('userData');
-            console.log(userData, 'after asyncStorage ');
 
             if (!userData) {
                Alert.alert('No user Data, login or signup');
-               console.log('No user Data, login or signup');
                navigate('AuthNavigator');
                return;
             }
@@ -29,15 +26,14 @@ export default () => {
 
             if (expirationDate <= new Date() || !token || !userId) {
                Alert.alert('Timed out please Login');
-               navigation.navigate('Auth');
+               navigate('AuthNavigator');
                return;
             }
 
             const expirationTime =
                expirationDate.getTime() - new Date().getTime();
-               console.log('authenticatin ...')
             dispatch(authActions.authenticate(userId, token, expirationTime));
-            navigate('LeftDrawer');
+            navigate('Modal');
          } catch (err) {
             console.log(err.message);
          }

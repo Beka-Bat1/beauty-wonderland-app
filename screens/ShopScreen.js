@@ -48,7 +48,6 @@ const ShopScreen = () => {
       loadProducts().then(() => {
          setIsLoading(false);
       });
-      console.log(userId, 'userId');
    }, [dispatch, loadProducts]);
 
    // useEffect(() => {

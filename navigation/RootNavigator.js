@@ -7,9 +7,8 @@ import {
 } from '@react-navigation/native';
 
 import {createStackNavigator} from '@react-navigation/stack';
-import {useSelector} from 'react-redux';
 import {Platform} from 'react-native';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 
 import AuthNavigator from './AuthNavigator';
 import LeftDrawer from './LeftDrawer';
@@ -31,6 +30,9 @@ import Colors from '../constants/Colors';
 
 const RootStack = createStackNavigator();
 export default () => {
+
+   const isAuth = useSelector(state => !!state.auth.token)
+
    return (
       <RootStack.Navigator
          mode="modal"
@@ -51,12 +53,14 @@ export default () => {
             ),
             headerTitle: 'Shopy Shop',
          })}>
-         <RootStack.Screen
+
+            {!isAuth && <RootStack.Screen
             name="LoadingScreen"
             component={Loading}
             mode="modal"
             options={{headerShown: false}}
-         />
+         />}
+
 
          <RootStack.Screen
             name="AuthNavigator"

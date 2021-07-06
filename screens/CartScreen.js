@@ -43,7 +43,7 @@ const CartScreen = (props) => {
       dispatch(cartActions.removeFromCart(productId));
    };
 
-   const sendOrderhandler = async () => {
+   const sendOrderHandler = async () => {
       setIsLoading(true);
       await dispatch(addOrder(cartItems, cartTotalAmount));
       setIsLoading(false);
@@ -68,7 +68,7 @@ const CartScreen = (props) => {
                      <PrimaryAppButton
                         title={'Order Now'}
                         disabled={cartItems.length === 0}
-                        onPress={sendOrderhandler}
+                        onPress={sendOrderHandler}
                      />
                   )}
                </Card>
@@ -88,6 +88,7 @@ const CartScreen = (props) => {
                      />
                   )}
                />
+
             </>
          )}
       </View>
