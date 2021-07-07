@@ -16,11 +16,10 @@ export default function App() {
 
    if (!fontsLoaded) {
       <AppLoading
-         onFinish={() => console.log('Apploading finished') }
+         onFinish={() => console.log('AppLoading finished') }
          onError={(err) => Alert.alert(err)}
       />;
    }
-
    return (
       <Provider store={store}>
          <NavigationContainer />

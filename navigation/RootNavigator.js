@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState, useEffect, useRef, forwardRef} from 'react';
 
 import {
    DrawerActions,
@@ -24,19 +24,17 @@ import OrdersScreen from '../screens/OrdersScreen';
 import TotalOrderScreen from '../screens/TotalOrdersScreen';
 import ProductDetailScreen from '../screens/ProductDetailScreen';
 
-
 import UserProductsScreen from '../screens/user/UserProductsScreen';
 import EditProductScreen from '../screens/user/EditProductScreen';
 
 import Colors from '../constants/Colors';
 
 const RootStack = createStackNavigator();
-export default () => {
-
-   const isAuth = useSelector(state => !!state.auth.token)
-
+export default forwardRef((props, navRef) => {
+   const isAuth = useSelector((state) => !!state.auth.token);
    return (
       <RootStack.Navigator
+         ref={navRef}
          mode="modal"
          initialRouteName="LoadingScreen"
          screenOptions={({navigation, route}) => ({
@@ -55,14 +53,14 @@ export default () => {
             ),
             headerTitle: 'Shopy Shop',
          })}>
-
-            {!isAuth && <RootStack.Screen
-            name="LoadingScreen"
-            component={Loading}
-            mode="modal"
-            options={{headerShown: false}}
-         />}
-
+         {!isAuth && (
+            <RootStack.Screen
+               name="LoadingScreen"
+               component={Loading}
+               mode="modal"
+               options={{headerShown: false}}
+            />
+         )}
 
          <RootStack.Screen
             name="AuthNavigator"
@@ -158,4 +156,4 @@ export default () => {
          />
       </RootStack.Navigator>
    );
-};
+});
