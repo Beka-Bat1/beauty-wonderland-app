@@ -16,7 +16,7 @@ export default function App() {
 
    if (!fontsLoaded) {
       <AppLoading
-         onFinish={() => Alert.alert('Finished')}
+         onFinish={() => console.log('Apploading finished') }
          onError={(err) => Alert.alert(err)}
       />;
    }

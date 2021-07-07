@@ -21,7 +21,9 @@ import HeaderLeft from './HeaderIcons/HeaderLeft';
 import ShopScreen from '../screens/ShopScreen';
 import CartScreen from '../screens/CartScreen';
 import OrdersScreen from '../screens/OrdersScreen';
+import TotalOrderScreen from '../screens/TotalOrdersScreen';
 import ProductDetailScreen from '../screens/ProductDetailScreen';
+
 
 import UserProductsScreen from '../screens/user/UserProductsScreen';
 import EditProductScreen from '../screens/user/EditProductScreen';
@@ -107,6 +109,15 @@ export default () => {
          <RootStack.Screen
             name="OrdersScreen"
             component={OrdersScreen}
+            options={({navigation, route}) => ({
+               headerTitle: 'Orders',
+               headerTitleStyle: {alignSelf: 'center'},
+            })}
+         />
+
+         <RootStack.Screen
+            name="TotalOrderScreen"
+            component={TotalOrderScreen}
             options={({navigation, route}) => ({
                headerTitle: 'Orders',
                headerTitleStyle: {alignSelf: 'center'},

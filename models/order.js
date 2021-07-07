@@ -1,12 +1,13 @@
 import moment from 'moment';
 
 class Order {
-  constructor(id, items, totalAmount, date, purchasedBy) {
+  constructor(id, items, totalAmount, date, purchasedBy, orderId) {
     this.id = id;
     this.items = items;
     this.totalAmount = totalAmount;
     this.date = date;
-    this.purchasedBy = purchasedBy
+    this.purchasedBy = purchasedBy;
+    this.orderId = orderId;
   }
 
   get readableDate() {

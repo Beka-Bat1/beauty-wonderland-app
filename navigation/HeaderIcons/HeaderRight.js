@@ -8,13 +8,17 @@ import Colors from '../../constants/Colors'
 
 const HeaderRight = ({...props}) => {
    const openCart = () => props.onOpenCart();
-   let totalAmount = useSelector(state => state.cart.items)
-   totalAmount = Object.keys(totalAmount).length
+   let cartItems = useSelector(state => state.cart.items)
+   let totalCount = 0;
+
+   for (let key of Object.entries(cartItems)){
+      totalCount += +key[1].quantity
+   }
 
    return (
    <TouchableOpacity onPress={openCart} style={styles.iconRight}>
       <View style={styles.wrapper} >
-      <Text style={styles.text}>{totalAmount}</Text>
+      <Text style={styles.text}>{totalCount}</Text>
       </View>
          <Ionicons
             name={Platform.OS === 'android' ? 'md-cart' : 'ios-cart'}
@@ -34,7 +38,7 @@ const styles = StyleSheet.create({
    },
    wrapper: {
       position: 'absolute',
-      height: 30, 
+      height: 30,
       width: 30,
       borderRadius: 15,
       backgroundColor: Colors.gray,

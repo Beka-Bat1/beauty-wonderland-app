@@ -28,9 +28,9 @@ export const fetchOrders = () => {
                ),
             );
          }
-         dispatch({type: SET_ORDERS, orders: loadedOrders});
+         dispatch({type: SET_ORDERS, payload: loadedOrders});
       } catch (err) {
-         throw err;
+         console.log(err);
       }
    };
 };
@@ -44,7 +44,6 @@ export const fetchTotalOrders = () => {
                method: 'GET',
             },
          );
-         console.log(response, 'response on total order fetching');
 
          if (!response.ok) {
             throw new Error('Something went wrong ... ');
@@ -53,17 +52,27 @@ export const fetchTotalOrders = () => {
          const resData = await response.json();
          const loadedOrders = [];
 
-         for (const orderKey in resData) {
-            loadedOrders.push(
+         for (const userId in resData) {
+            const userOrders = resData[userId]
+            for( const orderKey in userOrders){
+               const order = userOrders[orderKey]
+               console.log(order)
+               loadedOrders.push(
                new Order(
                   orderKey,
-                  resData[orderKey].cartItem,
-                  resData[orderKey].totalAmount,
-                  new Date(resData[key].date),
-                  resData[orderKey].purchasedBy,
+                  order.cartItem,
+                  order.totalAmount,
+                  new Date(order.date),
+                  order.purchasedBy,
+                  order.orderId,
                ),
             );
+            }
          }
+
+
+         console.log(loadedOrders, 'loaded orders in');
+         dispatch({type: SET_TOTAL_ORDERS, payload: loadedOrders});
       } catch (err) {
          console.log(err.message);
       }
@@ -87,13 +96,14 @@ export const addOrder = (cartItems, totalAmount) => {
             body: JSON.stringify({
                cartItems,
                totalAmount,
-               date: date.toISOString().splice(1, 10),
+               date: date.toISOString().slice(0, 10),
                purchasedBy: userId,
+               orderId: orderId,
             }),
          },
       );
 
-      console.log(response, 'firebase order handler response ');
+      console.log(response, 'firebase order handler response');
 
       if (!response.ok) {
          throw new Error('Something went wrong!' + response);
@@ -109,6 +119,7 @@ export const addOrder = (cartItems, totalAmount) => {
             amount: totalAmount,
             date: date,
             purchasedBy: userId,
+            orderId: orderId,
          },
       });
    };

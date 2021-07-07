@@ -44,6 +44,16 @@ const CustomDrawerContent = (props) => {
                      </View>
                   </TouchableRipple>
                )}
+
+
+               {isAdmin && <TouchableRipple
+                     onPress={() => props.navigation.push('TotalOrderScreen')}>
+                     <View style={styles.preference}>
+                        <Text>ყველა შეკვეთა</Text>
+                     </View>
+                  </TouchableRipple> }
+
+
             </Drawer.Section>
 
             <DrawerItem

@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import {
    View,
    Text,
@@ -6,7 +6,7 @@ import {
    Button,
    StyleSheet,
    ActivityIndicator,
-   Alert,
+   Alert
 } from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 
@@ -15,6 +15,7 @@ import CartItem from '../components/shop/CartItem';
 import Card from '../components/UI/Card';
 import * as cartActions from '../store/actions/cart';
 import {addOrder} from '../store/actions/orders';
+import { clearCart } from '../store/actions/cart'
 import PrimaryAppButton from '../components/UI/buttons/PrimaryAppButton';
 
 const CartScreen = (props) => {
@@ -43,16 +44,26 @@ const CartScreen = (props) => {
       dispatch(cartActions.removeFromCart(productId));
    };
 
-   const sendOrderHandler = async () => {
+   const sendOrderHandler = useCallback(async () => {
+      if(cartTotalAmount <= 0){
+         Alert.alert('maybe shop some products before ...')
+         return
+      }
       setIsLoading(true);
-      await dispatch(addOrder(cartItems, cartTotalAmount));
+      console.log('adding order ...');
+      try {
+         await dispatch(addOrder(cartItems, cartTotalAmount));
+         await dispatch(clearCart());
+      } catch (err) {
+         console.log(err);
+      }
       setIsLoading(false);
-   };
+   });
 
    return (
       <View style={styles.screen}>
          {isLoading ? (
-            <ActivityIndicator size="large" color={Colors.background} />
+            <ActivityIndicator size={80} color={Colors.girlish} />
          ) : (
             <>
                <Card style={styles.summary}>
@@ -88,7 +99,6 @@ const CartScreen = (props) => {
                      />
                   )}
                />
-
             </>
          )}
       </View>

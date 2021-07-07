@@ -14,6 +14,9 @@ const OrderItem = (props) => {
       <View style={styles.summary}>
         <Text style={styles.totalAmount}>${props.amount.toFixed(2)}</Text>
         <Text style={styles.date}>{props.date}</Text>
+
+        {props.userId && <Text style={styles.totalAmount}>User ID: {props.userId}</Text> }
+
       </View>
       <SecondaryAppButton
         title={showDetails ? "HideDetails" : "Show Details"}
@@ -34,24 +37,6 @@ const OrderItem = (props) => {
           ))}
         </View>
       )}
-
-
-        {/* {showDetails && (                 does not work
-        <FlatList
-          style={styles.detailItems}
-          data={props.items}
-          keyExtractor={(item) => item.id}
-          renderItem={(itemData) => {
-            <CartItem
-              key={cartItem.productId}
-              quantity={cartItem.quantity}
-              amount={cartItem.sum}
-              title={cartItem.productTitle}
-            />;
-          }}
-        />
-      )} */}
-      
     </Card>
   );
 };

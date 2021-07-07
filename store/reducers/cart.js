@@ -1,5 +1,4 @@
-import {ADD_TO_CART, REMOVE_FROM_CART} from '../actions/cart';
-import {ADD_ORDER} from '../actions/orders';
+import {ADD_TO_CART, REMOVE_FROM_CART, CLEAR_CART} from '../actions/cart';
 import CartItem from '../../models/cart-item';
 import {DELETE_PRODUCT} from '../actions/products';
 
@@ -75,6 +74,12 @@ export default (state = initialState, action) => {
             items: updatedItems,
             totalAmount: state.totalAmount - itemTotal,
          };
+      case CLEAR_CART:
+         return {
+            ...state,
+            totalAmount: 0,
+            items: {}
+         }
    }
 
    return state;

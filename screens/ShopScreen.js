@@ -44,15 +44,9 @@ const ShopScreen = () => {
    );
 
    useEffect(() => {
-      setIsLoading(true);
-      loadProducts().then(() => {
-         setIsLoading(false);
-      });
-   }, [dispatch, loadProducts]);
-
-   // useEffect(() => {
-   //    products = poducts.filter((product) => product.tag === filterName);
-   // }, [filterName]);
+      products = products.filter((product) => product.tag === filterName);
+      console.log(products, 'refresh' )
+   }, [filterName]);
 
    const loadProducts = useCallback(async () => {
       setError(null);
@@ -129,7 +123,6 @@ const ShopScreen = () => {
                      selectItemHandler(itemData.item.id, itemData.item.title);
                   }}
                />
-
                <PrimaryAppButton
                   title="To Cart"
                   onPress={() => {
