@@ -99,7 +99,6 @@ const EditProductScreen = (props) => {
                ),
             );
          } else {
-            console.log(inputValues, 'input starts here ');
             await dispatch(
                productsActions.createProduct(
                   formState.inputValues.title,
@@ -138,12 +137,7 @@ const EditProductScreen = (props) => {
 
    const inputChangeHandler = useCallback(
       (inputIdentifier, inputValue, inputValidity) => {
-         console.log(
-            inputIdentifier,
-            inputValue,
-            inputValidity,
-            '<===  input change handler',
-         );
+
          dispatchFormState({
             type: FORM_INPUT_UPDATE,
             value: inputValue,
@@ -214,7 +208,8 @@ const EditProductScreen = (props) => {
                   // selectedValue={editedProduct ? editedProduct.tag : 'Face'}
                   onValueChange={(itemValue, itemIndex) =>
                      inputChangeHandler(itemValue)
-                  }>
+                  }
+                  style={styles.pickerStyle}>
                   <Picker.Item label="Face" value="Face" />
                   <Picker.Item label="Cosmetics" value="Cosmetics" />
                   <Picker.Item label="Body" value="Body" />
@@ -258,6 +253,14 @@ const styles = StyleSheet.create({
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
+   },
+   pickerStyle: {
+      marginVertical: 30,
+      borderWidth: 2,
+      borderColor: Colors.gray1,
+      borderRadius: 0,
+      padding: 15,
+      paddingRight: 20,
    },
 });
 

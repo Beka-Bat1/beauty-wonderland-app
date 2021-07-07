@@ -83,7 +83,6 @@ const SignUpScreen = () => {
    );
 
    const authHandler = async () => {
-      console.log(formState.inputValues, 'formState.inputValues');
       let action = authActions.signUp(
          formState.inputValues.email,
          formState.inputValues.password,
@@ -92,20 +91,16 @@ const SignUpScreen = () => {
       setError(null);
       setIsLoading(true);
       try {
-         replace('LeftDrawer');
          let response = await dispatch(action);
+         replace('LeftDrawer');
       } catch (err) {
          setError(err.message);
-         setIsLoading(false);
       }
-
       setIsLoading(false);
    };
 
    const inputChangeHandler = useCallback(
       (inputIdentifier, inputValue, inputValidity) => {
-         console.log(inputIdentifier, inputValue, inputValidity, '<-- heree');
-
          dispatchFormState({
             type: FORM_INPUT_UPDATE,
             value: inputValue,

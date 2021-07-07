@@ -30,7 +30,7 @@ export const fetchOrders = () => {
          }
          dispatch({type: SET_ORDERS, payload: loadedOrders});
       } catch (err) {
-         console.log(err);
+         console.log(err.message);
       }
    };
 };
@@ -56,11 +56,10 @@ export const fetchTotalOrders = () => {
             const userOrders = resData[userId]
             for( const orderKey in userOrders){
                const order = userOrders[orderKey]
-               console.log(order)
                loadedOrders.push(
                new Order(
                   orderKey,
-                  order.cartItem,
+                  order.cartItems,
                   order.totalAmount,
                   new Date(order.date),
                   order.purchasedBy,
@@ -69,9 +68,6 @@ export const fetchTotalOrders = () => {
             );
             }
          }
-
-
-         console.log(loadedOrders, 'loaded orders in');
          dispatch({type: SET_TOTAL_ORDERS, payload: loadedOrders});
       } catch (err) {
          console.log(err.message);
@@ -85,7 +81,6 @@ export const addOrder = (cartItems, totalAmount) => {
       const userId = getState().auth.userId;
       const date = new Date();
       const orderId = '_' + Math.random().toString(36).substr(2, 9);
-      console.log(orderId, 'order id generated');
       const response = await fetch(
          `https://beauty-wonderland-e913c-default-rtdb.firebaseio.com/orders/${userId}.json?auth=${token}`,
          {

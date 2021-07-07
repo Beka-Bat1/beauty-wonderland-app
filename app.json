@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "beautyWonderland-reactNative",
-    "slug": "beautyWonderland-reactNative",
+    "name": "beauty wonderland",
+    "slug": "beauty-wonderland",
+    "icon": "./assets/icon.png",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -17,13 +17,17 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.beautyWonderland.beautyWonderland",
+      "buildNumber": "1.0.0"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.beautyWonderland.beautyWonderland",
+      "versionCode": 1
     },
     "web": {
       "favicon": "./assets/favicon.png"

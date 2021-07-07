@@ -40,7 +40,6 @@ export const signUp = (email, password) => {
       }
 
       const resData = await response.json();
-      console.log(resData);
       dispatch(
          authenticate(
             resData.localId,
@@ -103,7 +102,6 @@ export const signIn = (email, password) => {
 export const signOut = () => {
    clearLogoutTimer();
    try {
-      console.log('remove Item');
       AsyncStorage.removeItem('userData');
    } catch (err) {
       console.log(err.message);
@@ -135,7 +133,6 @@ const saveDataToStorage = async (token, userId, expirationDate) => {
             expiryDate: expirationDate.toISOString(),
          }),
       );
-      console.log(response, 'async setItem storage response');
    } catch (err) {
       console.log(err.message);
       throw new Error(err);

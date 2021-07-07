@@ -77,7 +77,6 @@ const SignInScreen = () => {
    useFocusEffect(
       useCallback(() => {
          if (isAuth) {
-            console.log(isAuth, 'replace with Left Drawer ');
             navigate('LeftDrawer');
          }
       }, [isAuth]),
@@ -94,10 +93,8 @@ const SignInScreen = () => {
          dispatch(action);
       } catch (err) {
          setError(err.message);
-         // navigate('LeftDrawer');
          setIsLoading(false);
       }
-      console.log(isAuth, 'is authenticated before navigating to shop');
       setIsLoading(false);
    };
 

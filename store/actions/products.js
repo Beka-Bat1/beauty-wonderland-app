@@ -30,6 +30,7 @@ export const fetchProducts = () => {
                   resData[key].imageUrl,
                   resData[key].description,
                   resData[key].price,
+                  resData[key].tag,
                ),
             );
          }
@@ -69,11 +70,9 @@ export const deleteProduct = (productId) => {
 };
 
 export const createProduct = (title, description, imageUrl, price, tag) => {
-   console.log(title, description, imageUrl, price, tag, "create Product params")
    return async (dispatch, getState) => {
       const token = getState().auth.token;
       const userId = getState().auth.userId;
-      console.log(token, userId, "<==== here")
       const response = await fetch(
          `https://beauty-wonderland-e913c-default-rtdb.firebaseio.com/products.json?auth=${token}`,
          {
@@ -135,15 +134,14 @@ export const updateProduct = (id, title, description, imageUrl, tag) => {
       dispatch({
          type: UPDATE_PRODUCT,
          payload: {
-               pid: id,
-         productData: {
-            title,
-            description,
-            imageUrl,
-            tag,
+            pid: id,
+            productData: {
+               title,
+               description,
+               imageUrl,
+               tag,
+            },
          },
-
-         }
       });
    };
 };

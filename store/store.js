@@ -15,6 +15,9 @@ const rootReducer = combineReducers({
 
 const middleware = [thunk];
 
+/// TODO do axios instances
+/// 
+
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const store = createStore(

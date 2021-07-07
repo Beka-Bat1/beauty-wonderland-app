@@ -50,7 +50,6 @@ const CartScreen = (props) => {
          return
       }
       setIsLoading(true);
-      console.log('adding order ...');
       try {
          await dispatch(addOrder(cartItems, cartTotalAmount));
          await dispatch(clearCart());

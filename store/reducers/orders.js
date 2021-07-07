@@ -15,7 +15,6 @@ const initialState = {
 export default (state = initialState, action) => {
    switch (action.type) {
       case ADD_ORDER:
-         console.log(action.payload, 'adding order ...');
          const newOrder = new Order(
             action.payload.id,
             action.payload.items,
@@ -34,7 +33,6 @@ export default (state = initialState, action) => {
             totalOrders: action.payload
          };
       case SET_ORDERS:
-         console.log(state, 'setting orders ...');
          return {
             ...state,
             orders: action.payload,

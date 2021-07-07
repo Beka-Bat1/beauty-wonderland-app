@@ -51,7 +51,7 @@ const LeftDrawer = () => {
          <Drawer.Screen
             name="Brands"
             component={ShopScreen}
-            initialParams={{params: 'Brands'}}
+            initialParams={{params: 'brands'}}
             options={{
                drawerLabel: 'ბრენდები',
                drawerIcon: (focused, size, color) => (
@@ -68,7 +68,7 @@ const LeftDrawer = () => {
          <Drawer.Screen
             name="Face"
             component={ShopScreen}
-            initialParams={{params: 'Face'}}
+            initialParams={{params: 'face'}}
             options={{
                drawerLabel: 'სახის მოვლა',
                drawerIcon: (focused, size, color) => (
@@ -84,7 +84,7 @@ const LeftDrawer = () => {
 
          <Drawer.Screen
             name="Cosmetics"
-            initialParams={{params: 'Cosmetics'}}
+            initialParams={{params: 'cosmetics'}}
             component={ShopScreen}
             options={{
                drawerLabel: 'კოსმეტიკა',
@@ -102,7 +102,7 @@ const LeftDrawer = () => {
 
          <Drawer.Screen
             name="Body"
-            initialParams={{params: 'Body'}}
+            initialParams={{params: 'body'}}
             component={ShopScreen}
             options={{
                drawerLabel: 'აქსესუარები',
@@ -119,7 +119,7 @@ const LeftDrawer = () => {
 
          <Drawer.Screen
             name="Hear"
-            initialParams={{params: 'Hear'}}
+            initialParams={{params: 'hear'}}
             component={ShopScreen}
             options={{
                drawerLabel: 'თმის მოვლა',
@@ -136,7 +136,7 @@ const LeftDrawer = () => {
 
          <Drawer.Screen
             name="Accessories"
-            initialParams={{params: 'Accessories'}}
+            initialParams={{params: 'accessories'}}
             component={ShopScreen}
             options={{
                drawerLabel: 'აქსესუარები',

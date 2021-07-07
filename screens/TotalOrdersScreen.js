@@ -29,7 +29,6 @@ const TotalOrdersScreen = () => {
    /// TODO filter, search, order by
 
    const fetchTotalOrderHandler = useCallback(async () => {
-      console.log('starting to load total orders');
       setIsLoading(true);
       try {
          await dispatch(orderActions.fetchTotalOrders());
@@ -62,16 +61,13 @@ const TotalOrdersScreen = () => {
          refreshing={isLoading}
          data={totalOrders}
          keyExtractor={(item) => item.id}
-         renderItem={(itemData) => {
-            debugger
-            (
+         renderItem={(itemData) => (
             <OrderItem
                amount={itemData.item.totalAmount}
                date={itemData.item.readableDate}
                items={itemData.item.items}
                userId={itemData.item.purchasedBy}
             />
-            )}
          )}
       />
    );

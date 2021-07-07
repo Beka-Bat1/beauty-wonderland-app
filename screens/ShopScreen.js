@@ -24,29 +24,37 @@ import SecondaryAppButton from '../components/UI/buttons/SecondaryAppButton';
 import {addToCart} from '../store/actions/cart';
 import {fetchProducts} from '../store/actions/products';
 
+//// todo search and sort
+
 const ShopScreen = () => {
-   const [isLoading, setIsLoading] = useState(false);
    const [isRefreshing, setIsRefreshing] = useState(false);
    const [error, setError] = useState('');
+   const [filteredProducts, setFilteredProducts] = useState([]);
+
    const {navigate} = useNavigation();
    const dispatch = useDispatch();
    const route = useRoute();
 
-   let products = useSelector((state) => state.products.availableProducts);
-   let userId = useSelector((state) => state.auth);
-   const filterName = route?.params;
+   let availableProducts = useSelector(
+      (state) => state.products.availableProducts,
+   );
+   const filterName = route.params;
+   let dataToRender = filterName ? filteredProducts : availableProducts;
 
    useFocusEffect(
       useCallback(() => {
          //  scrreen focused
          loadProducts();
-      }, []),
+      }, [filterName]),
    );
 
-   useEffect(() => {
-      products = products.filter((product) => product.tag === filterName);
-      console.log(products, 'refresh' )
-   }, [filterName]);
+   const filterProductHandler = () => {
+      setIsRefreshing(true);
+      let tmp = availableProducts.filter((product) => {
+         return product.tag == filterName.params;
+      });
+      setFilteredProducts(tmp);
+   };
 
    const loadProducts = useCallback(async () => {
       setError(null);
@@ -56,8 +64,11 @@ const ShopScreen = () => {
       } catch (err) {
          setError(err.message);
       }
+      if (filterName) {
+         filterProductHandler();
+      }
       setIsRefreshing(false);
-   }, [dispatch, setIsLoading, setError]);
+   }, [dispatch, setIsRefreshing, setError]);
 
    const selectItemHandler = (id, title) => {
       navigate('ProductDetailScreen', {
@@ -85,7 +96,7 @@ const ShopScreen = () => {
       );
    }
 
-   if (isLoading) {
+   if (isRefreshing) {
       return (
          <View
             style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
@@ -94,7 +105,7 @@ const ShopScreen = () => {
       );
    }
 
-   if (!isLoading && !products) {
+   if (!isRefreshing && !dataToRender) {
       return (
          <View
             style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
@@ -107,7 +118,7 @@ const ShopScreen = () => {
       <FlatList
          onRefresh={loadProducts}
          refreshing={isRefreshing}
-         data={products}
+         data={dataToRender}
          keyExtractor={(item) => item.id}
          renderItem={(itemData) => (
             <ProductItem

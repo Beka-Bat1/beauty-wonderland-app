@@ -17,7 +17,6 @@ export default (state = initialState, action) => {
             isAuth: true,
          };
       case AUTHENTICATE:
-      console.log('auhtenticated')
          return {
             ...state,
             userId: action.payload.userId,
@@ -25,7 +24,6 @@ export default (state = initialState, action) => {
             isAuth: true,
          };
       case SIGNOUT:
-      console.log("signing out in reducer")
          return {
             ...initialState,
             isAuth: false,
