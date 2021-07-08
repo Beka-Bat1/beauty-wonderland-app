@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "721197410279",
+    "firebase_url": "https://beauty-wonderland-e913c-default-rtdb.firebaseio.com",
+    "project_id": "beauty-wonderland-e913c",
+    "storage_bucket": "beauty-wonderland-e913c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:721197410279:android:2bd32f5f999e8003803f42",
+        "android_client_info": {
+          "package_name": "com.beautyWonderland.beautyWonderland"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "721197410279-ep7dad95ulqairuipjilfia8jpqg28be.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCJtaMdKQukS70rbnXz9XYoaUhwf66qTeQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "721197410279-ep7dad95ulqairuipjilfia8jpqg28be.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

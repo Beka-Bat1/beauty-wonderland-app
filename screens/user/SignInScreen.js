@@ -24,6 +24,8 @@ import {useFocusEffect} from '@react-navigation/native';
 
 import {styles} from './styles';
 
+import {authInstance} from '../../axios/instances';
+
 const SignInScreen = () => {
    const [isLoading, setIsLoading] = useState(false);
    const [error, setError] = useState();
