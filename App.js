@@ -18,7 +18,7 @@ export default function App() {
       <AppLoading
          onFinish={() => console.log('AppLoading finished')}
          onError={(err) => Alert.alert(err)}
-      />;
+      />
    }
 
    return (

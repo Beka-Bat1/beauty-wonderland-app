@@ -8,12 +8,16 @@ import Colors from '../../constants/Colors'
 
 const HeaderRight = ({...props}) => {
    const openCart = () => props.onOpenCart();
-   let cartItems = useSelector(state => state.cart.items)
-   let totalCount = 0;
+   let cartItems = useSelector(state => state.cart)
 
-   for (let key of Object.entries(cartItems)){
-      totalCount += +key[1].quantity
-   }
+   let totalCount = Object.entries(cartItems).reduce((acc, element) => {acc + element.quantity}, 0)
+
+   // let totalCount = 0;
+
+   // for (let key of Object.entries(cartItems)){
+   //    totalCount += +key[1].quantity
+   // }
+
 
    return (
    <TouchableOpacity onPress={openCart} style={styles.iconRight}>
