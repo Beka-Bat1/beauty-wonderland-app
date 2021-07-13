@@ -9,22 +9,16 @@ import {
    Alert,
    Text,
 } from 'react-native';
-
-import {LinearGradient} from 'expo-linear-gradient';
-import {useDispatch} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
-
-import Input from '../../components/UI/Input';
-import Card from '../../components/UI/Card';
-import Colors from '../../constants/Colors';
-import * as authActions from '../../store/actions/auth';
-
-import {useSelector} from 'react-redux';
 import {useFocusEffect} from '@react-navigation/native';
+import {LinearGradient} from 'expo-linear-gradient';
+import {useDispatch, useSelector} from 'react-redux';
 
-import {styles} from './styles';
-
-import {authInstance} from '../../axios/instances';
+import Input from '../../../components/UI/Input';
+import Card from '../../../components/UI/Card';
+import Colors from '../../../constants/Colors';
+import * as authActions from '../../../store/actions/auth';
+import getStyleObj from '../SignUpScreen/styles';
 
 const SignInScreen = () => {
    const [isLoading, setIsLoading] = useState(false);
@@ -32,7 +26,7 @@ const SignInScreen = () => {
    const dispatch = useDispatch();
    const {navigate, goBack, popToTop} = useNavigation();
    const isAuth = useSelector((rootState) => rootState.auth.isAuth);
-
+   const styles= getStyleObj()
    const FORM_INPUT_UPDATE = 'FORM_INPUT_UPDATE';
 
    const formReducer = (state, action) => {

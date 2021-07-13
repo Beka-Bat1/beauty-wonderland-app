@@ -30,7 +30,7 @@ export default (state = initialState, action) => {
       case SET_TOTAL_ORDERS:
          return {
             ...state,
-            totalOrders: action.payload
+            totalOrders: action.payload,
          };
       case SET_ORDERS:
          return {
@@ -40,7 +40,7 @@ export default (state = initialState, action) => {
       case TOGGLE_LOADING:
          return {
             ...state,
-            isLoading: !isLoading,
+            isLoading: (prevState) => !prevState,
          };
    }
 

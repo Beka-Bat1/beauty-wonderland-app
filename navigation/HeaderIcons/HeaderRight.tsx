@@ -2,15 +2,21 @@ import React from 'react';
 import {StyleSheet, View, Text, TouchableOpacity, Platform} from 'react-native';
 import {Ionicons} from '@expo/vector-icons';
 
-import { useSelector } from 'react-redux'
+import {useSelector} from 'react-redux';
 
-import Colors from '../../constants/Colors'
+import Colors from '../../constants/Colors';
 
 const HeaderRight = ({...props}) => {
    const openCart = () => props.onOpenCart();
-   let cartItems = useSelector(state => state.cart)
+   let cartItems = useSelector((state) => state?.cart);
 
-   let totalCount = Object.entries(cartItems).reduce((acc, element) => {acc + element.quantity}, 0)
+   let totalCount = Object.entries(cartItems.items).reduce(
+      (acc, element: any) => {
+         let itemQuantity: number = element[1].quantity;
+         return acc + itemQuantity;
+      },
+      0,
+   );
 
    // let totalCount = 0;
 
@@ -18,12 +24,11 @@ const HeaderRight = ({...props}) => {
    //    totalCount += +key[1].quantity
    // }
 
-
    return (
-   <TouchableOpacity onPress={openCart} style={styles.iconRight}>
-      <View style={styles.wrapper} >
-      <Text style={styles.text}>{totalCount}</Text>
-      </View>
+      <TouchableOpacity onPress={openCart} style={styles.iconRight}>
+         <View style={styles.wrapper}>
+            <Text style={styles.text}>{totalCount}</Text>
+         </View>
          <Ionicons
             name={Platform.OS === 'android' ? 'md-cart' : 'ios-cart'}
             size={28}
@@ -50,12 +55,12 @@ const styles = StyleSheet.create({
       bottom: 15,
       alignItems: 'center',
       justifyContent: 'center',
-      zIndex: 200
+      zIndex: 200,
    },
    text: {
       color: '#fff',
-      fontWeight: 'bold'
-   }
+      fontWeight: 'bold',
+   },
 });
 
 export default HeaderRight;

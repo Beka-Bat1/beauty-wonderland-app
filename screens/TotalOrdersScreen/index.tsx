@@ -10,36 +10,28 @@ import {
 import {useFocusEffect} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
 
-import * as orderActions from '../store/actions/orders';
-import Colors from '../constants/Colors';
-import OrderItem from '../components/shop/OrderItem';
+import * as orderActions from '../../store/actions/orders';
+import Colors from '../../constants/Colors';
+import OrderItem from '../../components/shop/OrderItem';
 
 const TotalOrdersScreen = () => {
    const [isLoading, setIsLoading] = useState(false);
    const [error, setError] = useState('');
-   const totalOrders = useSelector((state) => state.orders.totalOrders);
+   const totalOrders = useSelector((state) => state?.orders.totalOrders);
    const dispatch = useDispatch();
 
    useFocusEffect(
       useCallback(() => {
-         fetchTotalOrderHandler();
-      }, []),
+         setIsLoading(true);
+         dispatch(orderActions.fetchTotalOrders());
+         setIsLoading(false);
+      }, [totalOrders, dispatch]),
    );
 
    /// TODO filter, search, order by
 
-   const fetchTotalOrderHandler = useCallback(async () => {
-      setIsLoading(true);
-      try {
-         await dispatch(orderActions.fetchTotalOrders());
-      } catch (err) {
-         setError(err.message);
-      }
-      setIsLoading(false);
-   }, [dispatch, setIsLoading, setError]);
-
    if (isLoading) {
-      return <ActivityIndicator size="Large" color={Colors.girlish} />;
+      return <ActivityIndicator size="large" color={Colors.girlish} />;
    }
 
    if (error) {
@@ -57,7 +49,6 @@ const TotalOrdersScreen = () => {
 
    return (
       <FlatList
-         onRefresh={fetchTotalOrderHandler}
          refreshing={isLoading}
          data={totalOrders}
          keyExtractor={(item) => item.id}
@@ -75,4 +66,3 @@ const TotalOrdersScreen = () => {
 
 export default TotalOrdersScreen;
 
-const styles = StyleSheet.create({});

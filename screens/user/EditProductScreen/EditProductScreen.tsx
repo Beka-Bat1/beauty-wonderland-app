@@ -12,10 +12,11 @@ import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 import {useSelector, useDispatch} from 'react-redux';
 import {Picker} from '@react-native-picker/picker';
 
-import HeaderButton from '../../components/UI/HeaderButton';
-import * as productsActions from '../../store/actions/products';
-import Input from '../../components/UI/Input';
-import Colors from '../../constants/Colors';
+import HeaderButton from '../../../components/UI/HeaderButton';
+import * as productsActions from '../../../store/actions/products';
+import Input from '../../../components/UI/Input';
+import Colors from '../../../constants/Colors';
+import {StackActions, useNavigation, useRoute} from '@react-navigation/native';
 
 const FORM_INPUT_UPDATE = 'FORM_INPUT_UPDATE';
 
@@ -34,7 +35,7 @@ const formReducer = (state, action) => {
          updatedFormIsValid = updatedFormIsValid && updatedValidities[key];
       }
       return {
-         formIsValid: updatedFormIsValid,
+         formIsValid: true,
          inputValidities: updatedValidities,
          inputValues: updatedValues,
       };
@@ -42,15 +43,15 @@ const formReducer = (state, action) => {
    return state;
 };
 
-const EditProductScreen = (props) => {
+const EditProductScreen = () => {
    const [isLoading, setIsLoading] = useState(false);
    const [error, setError] = useState();
+   const navigation = useNavigation();
+   const params = useRoute().params;
+   const prodId = params ? params?.productId : null;
 
-   const auth = useSelector((state) => state.auth);
-
-   const prodId = props.route.params ? props.route.params.productId : null;
    const editedProduct = useSelector((state) =>
-      state.products.userProducts.find((prod) => prod.id === prodId),
+      state?.products.userProducts.find((prod) => prod.id === prodId),
    );
    const dispatch = useDispatch();
 
@@ -60,7 +61,7 @@ const EditProductScreen = (props) => {
          imageUrl: editedProduct ? editedProduct.imageUrl : '',
          description: editedProduct ? editedProduct.description : '',
          price: '',
-         tag: editedProduct ? editedProduct.description : '',
+         tag: editedProduct ? editedProduct.description : 'Cosmetics',
       },
       inputValidities: {
          title: editedProduct ? true : false,
@@ -83,6 +84,7 @@ const EditProductScreen = (props) => {
          Alert.alert('Wrong input!', 'Please check the errors in the form.', [
             {text: 'Okay'},
          ]);
+         console.warn('wrong input');
          return;
       }
       setError(null);
@@ -109,7 +111,8 @@ const EditProductScreen = (props) => {
                ),
             );
          }
-         props.navigation.goBack();
+
+         navigation.dispatch(StackActions.popToTop());
       } catch (err) {
          setError(err.message);
       }
@@ -118,7 +121,7 @@ const EditProductScreen = (props) => {
    }, [dispatch, prodId, formState]);
 
    useEffect(() => {
-      props.navigation.setOptions({
+      navigation.setOptions({
          headerRight: () => (
             <HeaderButtons HeaderButtonComponent={HeaderButton}>
                <Item
@@ -137,7 +140,6 @@ const EditProductScreen = (props) => {
 
    const inputChangeHandler = useCallback(
       (inputIdentifier, inputValue, inputValidity) => {
-
          dispatchFormState({
             type: FORM_INPUT_UPDATE,
             value: inputValue,
@@ -201,20 +203,16 @@ const EditProductScreen = (props) => {
                )}
 
                <Picker
-                  id="tag"
-                  errorText="Please enter a valid tag name!"
-                  initialValue={editedProduct ? editedProduct.tag : ''}
-                  initiallyValid={!!editedProduct}
-                  // selectedValue={editedProduct ? editedProduct.tag : 'Face'}
+                  selectedValue={formState.inputValues.tag}
                   onValueChange={(itemValue, itemIndex) =>
-                     inputChangeHandler(itemValue)
+                     inputChangeHandler('tag', itemValue, true)
                   }
                   style={styles.pickerStyle}>
-                  <Picker.Item label="Face" value="Face" />
-                  <Picker.Item label="Cosmetics" value="Cosmetics" />
-                  <Picker.Item label="Body" value="Body" />
-                  <Picker.Item label="Hear" value="Hear" />
-                  <Picker.Item label="Accessories" value="Accessories" />
+                  <Picker.Item label="Face" value="face" />
+                  <Picker.Item label="Cosmetics" value="cosmetics" />
+                  <Picker.Item label="Body" value="body" />
+                  <Picker.Item label="Hear" value="hear" />
+                  <Picker.Item label="Accessories" value="accessories" />
                </Picker>
 
                <Input
@@ -244,24 +242,5 @@ export const screenOptions = (navData) => {
       headerTitle: routeParams.productId ? 'Edit Product' : 'Add Product',
    };
 };
-
-const styles = StyleSheet.create({
-   form: {
-      margin: 20,
-   },
-   centered: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-   },
-   pickerStyle: {
-      marginVertical: 30,
-      borderWidth: 2,
-      borderColor: Colors.gray1,
-      borderRadius: 0,
-      padding: 15,
-      paddingRight: 20,
-   },
-});
 
 export default EditProductScreen;

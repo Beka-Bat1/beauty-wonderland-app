@@ -12,7 +12,7 @@ import {
    DrawerItem,
 } from '@react-navigation/drawer';
 
-import {Entypo} from '@expo/vector-icons';
+import { Entypo } from '@expo/vector-icons';
 
 import ShopScreen from '../screens/ShopScreen';
 import Cart from '../screens/CartScreen';
@@ -25,7 +25,7 @@ const LeftDrawer = () => {
 
    return (
       <Drawer.Navigator
-         drawerStyle={{paddingVertical: '15%'}}
+         drawerStyle={{ paddingVertical: '15%' }}
          drawerContent={(props) => <CustomDrawerContent {...props} />}
          drawerContentOptions={{
             drawerIcon: (size, color, focused) => (
@@ -42,7 +42,7 @@ const LeftDrawer = () => {
                      name="chevron-thin-right"
                      size={size}
                      color={color}
-                     style={{position: 'absolute', right: 15}}
+                     style={{ position: 'absolute', right: 15 }}
                   />
                ),
             }}
@@ -51,7 +51,7 @@ const LeftDrawer = () => {
          <Drawer.Screen
             name="Brands"
             component={ShopScreen}
-            initialParams={{params: 'brands'}}
+            initialParams={{ params: 'brands' }}
             options={{
                drawerLabel: 'ბრენდები',
                drawerIcon: (focused, size, color) => (
@@ -59,7 +59,7 @@ const LeftDrawer = () => {
                      name="chevron-thin-right"
                      size={size}
                      color={color}
-                     style={{position: 'absolute', right: 15}}
+                     style={{ position: 'absolute', right: 15 }}
                   />
                ),
             }}
@@ -68,15 +68,15 @@ const LeftDrawer = () => {
          <Drawer.Screen
             name="Face"
             component={ShopScreen}
-            initialParams={{params: 'face'}}
+            initialParams={{ params: 'face' }}
             options={{
-               drawerLabel: 'სახის მოვლა',
+               drawerLabel: 'სახის მოვლის საშუალებები',
                drawerIcon: (focused, size, color) => (
                   <Entypo
                      name="chevron-thin-right"
                      size={size}
                      color={color}
-                     style={{position: 'absolute', right: 15}}
+                     style={{ position: 'absolute', right: 15 }}
                   />
                ),
             }}
@@ -84,7 +84,7 @@ const LeftDrawer = () => {
 
          <Drawer.Screen
             name="Cosmetics"
-            initialParams={{params: 'cosmetics'}}
+            initialParams={{ params: 'cosmetics' }}
             component={ShopScreen}
             options={{
                drawerLabel: 'კოსმეტიკა',
@@ -94,7 +94,7 @@ const LeftDrawer = () => {
                      name="chevron-thin-right"
                      size={size}
                      color={color}
-                     style={{position: 'absolute', right: 15}}
+                     style={{ position: 'absolute', right: 15 }}
                   />
                ),
             }}
@@ -102,16 +102,16 @@ const LeftDrawer = () => {
 
          <Drawer.Screen
             name="Body"
-            initialParams={{params: 'body'}}
+            initialParams={{ params: 'body' }}
             component={ShopScreen}
             options={{
-               drawerLabel: 'აქსესუარები',
+               drawerLabel: 'ტანის მოვლის საშუალებები',
                drawerIcon: (focused, size, color) => (
                   <Entypo
                      name="chevron-thin-right"
                      size={size}
                      color={color}
-                     style={{position: 'absolute', right: 15}}
+                     style={{ position: 'absolute', right: 15 }}
                   />
                ),
             }}
@@ -119,16 +119,16 @@ const LeftDrawer = () => {
 
          <Drawer.Screen
             name="Hear"
-            initialParams={{params: 'hear'}}
+            initialParams={{ params: 'hear' }}
             component={ShopScreen}
             options={{
-               drawerLabel: 'თმის მოვლა',
+               drawerLabel: 'თმის მოვლის საშუალებები',
                drawerIcon: (focused, size, color) => (
                   <Entypo
                      name="chevron-thin-right"
                      size={size}
                      color={color}
-                     style={{position: 'absolute', right: 15}}
+                     style={{ position: 'absolute', right: 15 }}
                   />
                ),
             }}
@@ -136,7 +136,7 @@ const LeftDrawer = () => {
 
          <Drawer.Screen
             name="Accessories"
-            initialParams={{params: 'accessories'}}
+            initialParams={{ params: 'accessories' }}
             component={ShopScreen}
             options={{
                drawerLabel: 'აქსესუარები',
@@ -145,7 +145,7 @@ const LeftDrawer = () => {
                      name="chevron-thin-right"
                      size={size}
                      color={color}
-                     style={{position: 'absolute', right: 15}}
+                     style={{ position: 'absolute', right: 15 }}
                   />
                ),
             }}

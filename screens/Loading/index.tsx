@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {ActivityIndicator, View, StyleSheet, Alert} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import * as authActions from '../store/actions/auth';
+import * as authActions from '../../store/actions/auth';
 import {useDispatch} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 

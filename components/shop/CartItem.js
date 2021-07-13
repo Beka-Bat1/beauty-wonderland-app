@@ -9,6 +9,10 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 
 const CartItem = props => {
+
+  /// TODO add heart and view count 
+
+
   return (
     <View style={styles.cartItem}>
       <View style={styles.itemData}>

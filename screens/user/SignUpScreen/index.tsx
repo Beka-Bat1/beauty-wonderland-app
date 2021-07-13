@@ -15,11 +15,11 @@ import {useDispatch} from 'react-redux';
 import {useNavigation, useFocusEffect} from '@react-navigation/native';
 import {useSelector} from 'react-redux';
 
-import Input from '../../components/UI/Input';
-import Card from '../../components/UI/Card';
-import Colors from '../../constants/Colors';
-import * as authActions from '../../store/actions/auth';
-import {styles} from './styles';
+import Input from '../../../components/UI/Input';
+import Card from '../../../components/UI/Card';
+import Colors from '../../../constants/Colors';
+import * as authActions from '../../../store/actions/auth';
+import getStyleObj from './styles';
 
 // import {formReducer} from '../utils/formReducer';
 // import FORM_INPUT_UPDATE from '../utils/formReducer'
@@ -27,10 +27,11 @@ import {styles} from './styles';
 const SignUpScreen = () => {
    const [isLoading, setIsLoading] = useState(false);
    const [error, setError] = useState();
-   let isAuth = useSelector((state) => state.auth.isAuth);
+   let isAuth = useSelector((state) => state?.auth.isAuth);
    const dispatch = useDispatch();
    const {navigate, replace, goBack} = useNavigation();
-
+   const style = getStyleObj({});
+   
    const FORM_INPUT_UPDATE = 'FORM_INPUT_UPDATE';
 
    const formReducer = (state, action) => {

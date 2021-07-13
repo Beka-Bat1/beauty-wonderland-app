@@ -6,33 +6,38 @@ import {
    Button,
    StyleSheet,
    ActivityIndicator,
-   Alert
+   Alert,
 } from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 
-import Colors from '../constants/Colors';
-import CartItem from '../components/shop/CartItem';
-import Card from '../components/UI/Card';
-import * as cartActions from '../store/actions/cart';
-import {addOrder} from '../store/actions/orders';
-import { clearCart } from '../store/actions/cart'
-import PrimaryAppButton from '../components/UI/buttons/PrimaryAppButton';
+import Colors from '../../constants/Colors';
+import CartItem from '../../components/shop/CartItem';
+import Card from '../../components/UI/Card';
+import * as cartActions from '../../store/actions/cart';
+import {clearCart, removeFromCart} from '../../store/actions/cart';
+import {addOrder} from '../../store/actions/orders';
+import PrimaryAppButton from '../../components/UI/buttons/PrimaryAppButton';
+import getStyleObj from './styles';
+import {RootState} from '../../store/store';
 
 const CartScreen = (props) => {
    const dispatch = useDispatch();
    const [isLoading, setIsLoading] = useState(false);
-
-   const cartTotalAmount = useSelector((state) => state.cart.totalAmount);
+   const styles = getStyleObj({});
+   const cartTotalAmount = useSelector(
+      (state: RootState) => state.cart.totalAmount,
+   );
+   const items = useSelector((state: RootState) => state.cart.items);
 
    const cartItems = useSelector((state) => {
       const transformedCartItems = [];
-      for (const key in state.cart.items) {
+      for (const key in items) {
          transformedCartItems.push({
             productId: key,
-            productTitle: state.cart.items[key].productTitle,
-            productPrice: state.cart.items[key].productPrice,
-            quantity: state.cart.items[key].quantity,
-            sum: state.cart.items[key].sum,
+            productTitle: items[key].productTitle,
+            productPrice: items[key].productPrice,
+            quantity: items[key].quantity,
+            sum: items[key].sum,
          });
       }
       return transformedCartItems.sort((a, b) =>
@@ -41,23 +46,25 @@ const CartScreen = (props) => {
    });
 
    const removeFromCartHandler = (productId) => {
-      dispatch(cartActions.removeFromCart(productId));
+      dispatch(removeFromCart(productId));
    };
 
    const sendOrderHandler = useCallback(async () => {
-      if(cartTotalAmount <= 0){
-         Alert.alert('maybe shop some products before ...')
-         return
+      if (cartTotalAmount <= 0) {
+         Alert.alert('maybe shop some products before ordering ...');
+         alert('maybe shop some products before  ordering...');
+         console.warn('maybe shop some products before ordering ...');
+         return;
       }
       setIsLoading(true);
       try {
-         await dispatch(addOrder(cartItems, cartTotalAmount));
-         await dispatch(clearCart());
+         dispatch(addOrder(cartItems, cartTotalAmount));
+         dispatch(clearCart());
       } catch (err) {
          console.log(err);
       }
       setIsLoading(false);
-   });
+   }, []);
 
    return (
       <View style={styles.screen}>
@@ -103,24 +110,5 @@ const CartScreen = (props) => {
       </View>
    );
 };
-
-const styles = StyleSheet.create({
-   screen: {
-      margin: 20,
-   },
-   summary: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      marginBottom: 20,
-      padding: 10,
-   },
-   summaryText: {
-      fontSize: 18,
-   },
-   amount: {
-      color: 'white',
-   },
-});
 
 export default CartScreen;

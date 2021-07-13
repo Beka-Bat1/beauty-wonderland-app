@@ -2,15 +2,18 @@ import React from 'react';
 import {StyleSheet, Text, View, ScrollView, Image, Alert} from 'react-native';
 
 import {useSelector, useDispatch} from 'react-redux';
-import * as Colors from '../constants/Colors';
-import {addToCart} from '../store/actions/cart';
-import PrimaryAppButton from '../components/UI/buttons/PrimaryAppButton';
+import * as Colors from '../../constants/Colors';
+import {addToCart} from '../../store/actions/cart';
+import PrimaryAppButton from '../../components/UI/buttons/PrimaryAppButton';
+import getStyleObj from './styles';
+
+import {RootState} from '../../store/store';
 
 const ProductDetailScreen = (props) => {
    const productId = props.route.params.productId;
-
-   const selectedProduct = useSelector((state) => {
-      return state.products.availableProducts.find(
+   const styles = getStyleObj({});
+   const selectedProduct = useSelector((state: RootState) => {
+      return state?.products.availableProducts.find(
          (prod) => prod.id === productId,
       );
    });
@@ -49,25 +52,3 @@ const ProductDetailScreen = (props) => {
 };
 
 export default ProductDetailScreen;
-
-const styles = StyleSheet.create({
-   image: {
-      width: '100%',
-      height: 300,
-   },
-   actions: {
-      marginVertical: 10,
-      alignItems: 'center',
-   },
-   price: {
-      fontSize: 20,
-      color: '#888',
-      textAlign: 'center',
-      marginVertical: 20,
-   },
-   description: {
-      fontSize: 14,
-      textAlign: 'center',
-      marginHorizontal: 20,
-   },
-});

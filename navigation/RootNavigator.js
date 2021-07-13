@@ -25,7 +25,7 @@ import TotalOrderScreen from '../screens/TotalOrdersScreen';
 import ProductDetailScreen from '../screens/ProductDetailScreen';
 
 import UserProductsScreen from '../screens/user/UserProductsScreen';
-import EditProductScreen from '../screens/user/EditProductScreen';
+import EditProductScreen from '../screens/user/EditProductScreen/EditProductScreen';
 
 import Colors from '../constants/Colors';
 
